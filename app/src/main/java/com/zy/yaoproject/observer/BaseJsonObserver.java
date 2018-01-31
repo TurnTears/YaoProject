@@ -7,7 +7,7 @@ import android.content.Context;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.zy.yaoproject.entity.BaseEntity;
+import com.zy.yaoproject.entity.Result;
 import com.zy.yaoproject.network.CodeContent;
 import com.zy.yaoproject.utils.NetUtils;
 
@@ -17,7 +17,6 @@ import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Date;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,24 +24,20 @@ import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.internal.util.EndConsumerHelper;
-import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
-import retrofit2.Response;
 
 /**
  * Created by muzi on 2017/12/15.
  * 727784430@qq.com
  */
 
-public abstract class BaseJsonObserver implements Observer<Response<ResponseBody>> {
+public abstract class BaseJsonObserver implements Observer<ResponseBody> {
 
     final AtomicReference<Disposable> s = new AtomicReference<Disposable>();
 
     private Context context;
-    private Headers headers;
     private JSONObject jsonObject;
-    private Date date;
 
     public BaseJsonObserver(Context context) {
         this.context = context;
@@ -52,7 +47,8 @@ public abstract class BaseJsonObserver implements Observer<Response<ResponseBody
     public final void onSubscribe(@NonNull Disposable s) {
         if (EndConsumerHelper.setOnce(this.s, s, getClass())) {
             if (!NetUtils.isNetworkAvailable(context)) {
-                onError(new BaseEntity(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG), null);
+                onError(new Result(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG), null);
+                s.dispose();
                 return;
             }
             onStart();
@@ -62,11 +58,11 @@ public abstract class BaseJsonObserver implements Observer<Response<ResponseBody
     public void onStart() {
     }
 
-    public void onError(@NonNull BaseEntity baseEntity) {
+    public void onError(@NonNull Result result) {
     }
 
-    public void onError(@NonNull BaseEntity baseEntity, JSONObject jsonObject) {
-        this.onError(baseEntity);
+    public void onError(@NonNull Result result, JSONObject jsonObject) {
+        this.onError(result);
     }
 
     public void onSuccess(@NonNull JSONObject jsonObject) {
@@ -77,11 +73,9 @@ public abstract class BaseJsonObserver implements Observer<Response<ResponseBody
     }
 
     @Override
-    public final void onNext(@NonNull Response<ResponseBody> response) {
+    public final void onNext(@NonNull ResponseBody responseBody) {
         try {
-            headers = response.headers();
-            date = headers.getDate("Date");
-            jsonObject = new JSONObject(response.body().string());
+            jsonObject = new JSONObject(responseBody.string());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +85,7 @@ public abstract class BaseJsonObserver implements Observer<Response<ResponseBody
                 onSuccess(jsonObject);
                 break;
             default:
-                onError(new BaseEntity(0, null), jsonObject);
+                onError(new Result(0, null), jsonObject);
                 onComplete();
                 break;
         }
@@ -138,7 +132,7 @@ public abstract class BaseJsonObserver implements Observer<Response<ResponseBody
                 code = CodeContent.EXCEPTION_CLASS_CAST;
             }
         }
-        onError(new BaseEntity(code, reason), null);
+        onError(new Result(code, reason), null);
         onComplete();
     }
 }

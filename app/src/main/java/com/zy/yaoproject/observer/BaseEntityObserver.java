@@ -7,7 +7,7 @@ import android.content.Context;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.zy.yaoproject.entity.BaseEntity;
+import com.zy.yaoproject.entity.Result;
 import com.zy.yaoproject.network.CodeContent;
 import com.zy.yaoproject.utils.NetUtils;
 
@@ -29,7 +29,7 @@ import retrofit2.HttpException;
  * 727784430@qq.com
  */
 
-public abstract class BaseEntityObserver<T extends BaseEntity> implements Observer<T> {
+public abstract class BaseEntityObserver<T> implements Observer<Result<T>> {
 
     private Context context;
 
@@ -43,7 +43,8 @@ public abstract class BaseEntityObserver<T extends BaseEntity> implements Observ
     public final void onSubscribe(@NonNull Disposable s) {
         if (EndConsumerHelper.setOnce(this.s, s, getClass())) {
             if (!NetUtils.isNetworkAvailable(context)) {//网络断开
-                onError(new BaseEntity(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG));
+                onError(new Result(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG));
+                s.dispose();
                 return;
             }
             onStart();
@@ -53,11 +54,11 @@ public abstract class BaseEntityObserver<T extends BaseEntity> implements Observ
     public void onStart() {
     }
 
-    public void onError(@NonNull BaseEntity baseEntity) {
+    public void onError(@NonNull Result result) {
 
     }
 
-    public void onSuccess(@NonNull T t) {
+    public void onSuccess(@NonNull Result<T> result) {
 
     }
 
@@ -66,18 +67,19 @@ public abstract class BaseEntityObserver<T extends BaseEntity> implements Observ
     }
 
     @Override
-    public final void onNext(@NonNull T t) {
-        switch (t.getShowapi_res_code()) {
+    public final void onNext(@NonNull Result<T> result) {
+        switch (result.getShowapi_res_code()) {
             case CodeContent.SUCCESS:
                 //200
-                onSuccess(t);
+                onSuccess(result);
                 break;
             default:
-                onError(t);
+                onError(result);
                 onComplete();
                 break;
         }
     }
+
 
     @Override
     public final void onError(@NonNull Throwable e) {
@@ -120,7 +122,7 @@ public abstract class BaseEntityObserver<T extends BaseEntity> implements Observ
                 code = CodeContent.EXCEPTION_CLASS_CAST;
             }
         }
-        onError(new BaseEntity(code, reason));
+        onError(new Result(code, reason));
         onComplete();
     }
 

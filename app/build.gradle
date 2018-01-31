@@ -91,4 +91,7 @@ dependencies {
 
     //数据库
     implementation 'org.litepal.android:core:1.6.0'
+
+    //fragment管理
+    implementation 'me.yokeyword:fragmentation:1.1.10'
 }

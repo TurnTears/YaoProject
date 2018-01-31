@@ -1,8 +1,10 @@
 package com.zy.yaoproject.network;
 
 
+import com.zy.yaoproject.entity.ClassifyEntity;
+import com.zy.yaoproject.entity.Result;
+
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 
 /**
@@ -13,5 +15,6 @@ import retrofit2.http.GET;
 public interface ApiService {
 
     @GET("93-96")
-    Observable<ResponseBody> getClassify();
+    Observable<Result<ClassifyEntity>> getClassify();
+
 }

@@ -2,7 +2,7 @@ package com.zy.yaoproject.observer;
 
 import android.content.Context;
 
-import com.zy.yaoproject.entity.BaseEntity;
+import com.zy.yaoproject.entity.Result;
 import com.zy.yaoproject.utils.StringUtils;
 import com.zy.yaoproject.utils.ToastUtils;
 
@@ -12,7 +12,7 @@ import com.zy.yaoproject.utils.ToastUtils;
  * 727784430@qq.com
  */
 
-public abstract class LoadingEntityObserver<T extends BaseEntity> extends BaseEntityObserver<T> {
+public abstract class LoadingEntityObserver<T extends Result> extends BaseEntityObserver<T> {
 
     private Context context;
     private boolean isShow;
@@ -44,7 +44,7 @@ public abstract class LoadingEntityObserver<T extends BaseEntity> extends BaseEn
 //    }
 
     @Override
-    public void onError(BaseEntity baseEntity) {
+    public void onError(Result baseEntity) {
         super.onError(baseEntity);
         if (!StringUtils.isEmpty(baseEntity.getShowapi_res_error())) {
             ToastUtils.showToast(baseEntity.getShowapi_res_error());

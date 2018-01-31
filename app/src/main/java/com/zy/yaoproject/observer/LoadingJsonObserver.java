@@ -2,7 +2,7 @@ package com.zy.yaoproject.observer;
 
 import android.content.Context;
 
-import com.zy.yaoproject.entity.BaseEntity;
+import com.zy.yaoproject.entity.Result;
 import com.zy.yaoproject.utils.StringUtils;
 import com.zy.yaoproject.utils.ToastUtils;
 
@@ -46,7 +46,7 @@ public abstract class LoadingJsonObserver extends BaseJsonObserver {
 //    }
 
     @Override
-    public void onError(BaseEntity baseEntity, JSONObject jsonObject) {
+    public void onError(Result baseEntity, JSONObject jsonObject) {
         super.onError(baseEntity, jsonObject);
         if (!StringUtils.isEmpty(baseEntity.getShowapi_res_error())) {
             ToastUtils.showToast(baseEntity.getShowapi_res_error());
