@@ -19,6 +19,7 @@ public class ClassChildFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    private String id;
     private ClassFragment parentFragment;
 
     @Override
@@ -29,8 +30,15 @@ public class ClassChildFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         super.initView(view);
+        id = getArguments().getString("id");
         parentFragment = (ClassFragment) getParentFragment();
         initRecyclerView();
+    }
+
+    @Override
+    protected void requstData() {
+        super.requstData();
+
     }
 
     /**

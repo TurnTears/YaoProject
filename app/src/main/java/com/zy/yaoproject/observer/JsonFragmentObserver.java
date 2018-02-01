@@ -5,8 +5,6 @@ import com.zy.yaoproject.entity.Result;
 import com.zy.yaoproject.utils.StringUtils;
 import com.zy.yaoproject.utils.ToastUtils;
 
-import org.json.JSONObject;
-
 /**
  * Created by muzi on 2018/1/30.
  * 727784430@qq.com
@@ -44,8 +42,8 @@ public abstract class JsonFragmentObserver extends BaseJsonObserver {
     }
 
     @Override
-    public void onError(Result baseEntity, JSONObject jsonObject) {
-        super.onError(baseEntity, jsonObject);
+    public void onError(Result baseEntity) {
+        super.onError(baseEntity);
         if (!StringUtils.isEmpty(baseEntity.getShowapi_res_error())) {
             ToastUtils.showToast(baseEntity.getShowapi_res_error());
         }

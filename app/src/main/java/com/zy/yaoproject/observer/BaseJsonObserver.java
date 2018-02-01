@@ -38,6 +38,9 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
 
     private Context context;
     private JSONObject jsonObject;
+    private JSONObject showapi_res_body;
+    private int showapi_res_code;
+    private String showapi_res_error;
 
     public BaseJsonObserver(Context context) {
         this.context = context;
@@ -47,7 +50,7 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
     public final void onSubscribe(@NonNull Disposable s) {
         if (EndConsumerHelper.setOnce(this.s, s, getClass())) {
             if (!NetUtils.isNetworkAvailable(context)) {
-                onError(new Result(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG), null);
+                onError(new Result(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG));
                 s.dispose();
                 return;
             }
@@ -61,10 +64,6 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
     public void onError(@NonNull Result result) {
     }
 
-    public void onError(@NonNull Result result, JSONObject jsonObject) {
-        this.onError(result);
-    }
-
     public void onSuccess(@NonNull JSONObject jsonObject) {
     }
 
@@ -76,16 +75,19 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
     public final void onNext(@NonNull ResponseBody responseBody) {
         try {
             jsonObject = new JSONObject(responseBody.string());
+            showapi_res_code = jsonObject.optInt("showapi_res_code");
+            showapi_res_error = jsonObject.optString("showapi_res_error");
+            showapi_res_body = jsonObject.optJSONObject("showapi_res_body");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        switch (jsonObject.optInt("code")) {
+        switch (showapi_res_code) {
             case CodeContent.SUCCESS:
-                //200
-                onSuccess(jsonObject);
+                //成功
+                onSuccess(showapi_res_body);
                 break;
             default:
-                onError(new Result(0, null), jsonObject);
+                onError(new Result(showapi_res_code, showapi_res_error));
                 onComplete();
                 break;
         }
@@ -132,7 +134,7 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
                 code = CodeContent.EXCEPTION_CLASS_CAST;
             }
         }
-        onError(new Result(code, reason), null);
+        onError(new Result(code, reason));
         onComplete();
     }
 }

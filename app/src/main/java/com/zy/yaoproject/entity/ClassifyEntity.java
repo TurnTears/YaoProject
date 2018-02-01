@@ -9,72 +9,39 @@ import java.util.List;
 
 public class ClassifyEntity {
 
+
     /**
-     * ret_code : 0
-     * flag : true
-     * data : [{"id":"55c761e35d84145c548a9a76","type":"感冒发热"}]
+     * classify : 急性肾小球肾炎
+     * classifyId : 599ad2a0600b2149d689b757
      */
 
-    private int ret_code;
-    private boolean flag;
-    private List<DataBean> data;
+    private String classify;
 
-    public int getRet_code() {
-        return ret_code;
+    private String classifyId;
+
+    private List<String> classList;
+
+    public String getClassify() {
+        return classify;
     }
 
-    public void setRet_code(int ret_code) {
-        this.ret_code = ret_code;
+    public void setClassify(String classify) {
+        this.classify = classify;
     }
 
-    public boolean isFlag() {
-        return flag;
+    public String getClassifyId() {
+        return classifyId;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setClassifyId(String classifyId) {
+        this.classifyId = classifyId;
     }
 
-    public List<DataBean> getData() {
-        return data;
+    public List<String> getClassList() {
+        return classList;
     }
 
-    public void setData(List<DataBean> data) {
-        this.data = data;
-    }
-
-    public static class DataBean {
-        /**
-         * id : 55c761e35d84145c548a9a76
-         * type : 感冒发热
-         */
-
-        private String id;
-        private String type;
-        private boolean isSelect;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public boolean isSelect() {
-            return isSelect;
-        }
-
-        public void setSelect(boolean select) {
-            isSelect = select;
-        }
+    public void setClassList(List<String> classList) {
+        this.classList = classList;
     }
 }
