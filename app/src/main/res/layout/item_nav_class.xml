@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="17.5dp"
+    android:paddingTop="17.5dp">
+
+    <TextView
+        android:id="@+id/tabText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="14sp"
+        tools:text="相机" />
+
+    <View
+        android:id="@+id/tabView"
+        android:layout_width="4dp"
+        android:layout_height="15dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/themeColor"
+        android:visibility="invisible" />
+
+</FrameLayout>

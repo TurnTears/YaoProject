@@ -1,7 +1,6 @@
 package com.zy.yaoproject.observer;
 
-import android.content.Context;
-
+import com.zy.yaoproject.base.activity.BaseUIActivity;
 import com.zy.yaoproject.entity.Result;
 import com.zy.yaoproject.utils.StringUtils;
 import com.zy.yaoproject.utils.ToastUtils;
@@ -13,37 +12,36 @@ import org.json.JSONObject;
  * 727784430@qq.com
  */
 
-public abstract class LoadingJsonObserver extends BaseJsonObserver {
+public abstract class JsonActivityObserver extends BaseJsonObserver {
 
-    private boolean isShow;
-    private Context context;
+    private boolean isShow = true;
+    private BaseUIActivity context;
 
 
-    public LoadingJsonObserver(Context context) {
+    public JsonActivityObserver(BaseUIActivity context) {
         super(context);
-//        this.context = (BaseUIActivity) context;
         this.context = context;
     }
 
-    public LoadingJsonObserver(Context context, boolean isShow) {
+    public JsonActivityObserver(BaseUIActivity context, boolean isShow) {
         this(context);
         this.isShow = isShow;
     }
 
-//    @Override
-//    public void onStart() {
-//        if (isShow) {
-//            context.showLoadingView();
-//        }
-//    }
-//
-//    @Override
-//    public void onComplete() {
-//        super.onComplete();
-//        if (isShow) {
-//            context.hiddenLoadingView();
-//        }
-//    }
+    @Override
+    public void onStart() {
+        if (isShow) {
+            context.refreshStart();
+        }
+    }
+
+    @Override
+    public void onComplete() {
+        super.onComplete();
+        if (isShow) {
+            context.refreshFinish();
+        }
+    }
 
     @Override
     public void onError(Result baseEntity, JSONObject jsonObject) {

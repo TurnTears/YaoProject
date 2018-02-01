@@ -6,4 +6,7 @@
     <color name="themeColor">#009AEA</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="tabUnSelectColor">#717171</color>
+    <color name="dividerColor">#cfcfcf</color>
+    <color name="defaultTextColor">#0e0e0e</color>
 </resources>

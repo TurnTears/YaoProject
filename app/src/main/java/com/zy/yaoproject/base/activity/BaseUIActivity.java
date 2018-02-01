@@ -29,7 +29,7 @@ public abstract class BaseUIActivity extends RxActivity {
         super.onCreate(savedInstanceState);
         setContentView(bindLayout());
         context = this;
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
         initView();
         requestData();
     }

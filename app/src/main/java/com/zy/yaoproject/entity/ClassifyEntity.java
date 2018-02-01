@@ -51,6 +51,7 @@ public class ClassifyEntity {
 
         private String id;
         private String type;
+        private boolean isSelect;
 
         public String getId() {
             return id;
@@ -66,6 +67,14 @@ public class ClassifyEntity {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
         }
     }
 }

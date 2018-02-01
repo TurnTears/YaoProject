@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">YaoProject</string>
+    <string name="app_name">淘药网</string>
+
+    <!--我的-->
+    <string name="icon_myself">&#xe602;</string>
+    <!--首页-->
+    <string name="icon_home">&#xe603;</string>
+    <!--购物车-->
+    <string name="icon_cart">&#xe604;</string>
+    <!--分类-->
+    <string name="icon_fenlei">&#xe64b;</string>
+
 </resources>
