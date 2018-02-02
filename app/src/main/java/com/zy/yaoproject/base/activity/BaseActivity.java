@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.zy.yaoproject.utils.ActivityStackManager;
 import com.zy.yaoproject.utils.ToastUtils;
@@ -57,7 +58,16 @@ public abstract class BaseActivity extends BaseUIActivity {
      * @param layout
      * @return
      */
-    public View inflaterView(@LayoutRes int layout) {
-        return LayoutInflater.from(this).inflate(layout, null, false);
+    public View inflaterView(@LayoutRes int layout, ViewGroup root, boolean attach) {
+        return LayoutInflater.from(this).inflate(layout, root, attach);
     }
+
+    public View inflaterView(@LayoutRes int layout, ViewGroup root) {
+        return inflaterView(layout, root, false);
+    }
+
+    public View inflaterView(@LayoutRes int layout) {
+        return inflaterView(layout, null);
+    }
+
 }

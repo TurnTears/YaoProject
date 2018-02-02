@@ -1,11 +1,12 @@
 package com.zy.yaoproject.ui.main;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zy.yaoproject.R;
-import com.zy.yaoproject.adapter.ClassChildAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.entity.ClassifyChildEntity;
 
@@ -21,10 +22,10 @@ import butterknife.BindView;
 
 public class ClassChildFragment extends BaseFragment {
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.tagFlowLayout)
+    TagFlowLayout tagFlowLayout;
 
-    private ClassChildAdapter adapter;
+    private TagAdapter adapter;
     private ArrayList<ClassifyChildEntity> entityArrayList;
 
     @Override
@@ -39,20 +40,24 @@ public class ClassChildFragment extends BaseFragment {
         initRecyclerView();
     }
 
-    @Override
-    protected void requstData() {
-        super.requstData();
-
-    }
-
     /**
-     * 初始化RecyclerView
+     * 初始化tag
      */
     private void initRecyclerView() {
-        adapter = new ClassChildAdapter(R.layout.item_class_child, entityArrayList);
-        adapter.setSpanSizeLookup((gridLayoutManager, position) -> 1);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
-        recyclerView.setAdapter(adapter);
+        adapter = new TagAdapter(entityArrayList) {
+            @Override
+            public View getView(FlowLayout parent, int position, Object o) {
+                View view = inflaterView(R.layout.item_class_child, parent);
+                TextView textView = view.findViewById(R.id.item_text);
+                textView.setText(entityArrayList.get(position).getClassify());
+                return view;
+            }
+        };
+        tagFlowLayout.setAdapter(adapter);
+        tagFlowLayout.setOnTagClickListener((view, position, parent) -> {
+            showToast(entityArrayList.get(position).getClassifyId());
+            return false;
+        });
     }
 
 }

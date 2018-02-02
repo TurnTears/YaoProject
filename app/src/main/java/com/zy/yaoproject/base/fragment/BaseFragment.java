@@ -47,8 +47,16 @@ public abstract class BaseFragment extends BaseUIFragment {
      * @param layout
      * @return
      */
+    protected View inflaterView(@LayoutRes int layout, ViewGroup root, boolean attach) {
+        return baseActivity.inflaterView(layout, root, attach);
+    }
+
+    protected View inflaterView(@LayoutRes int layout, ViewGroup root) {
+        return inflaterView(layout, root, false);
+    }
+
     protected View inflaterView(@LayoutRes int layout) {
-        return baseActivity.inflaterView(layout);
+        return inflaterView(layout, null);
     }
 
 }

@@ -11,10 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:gravity="center"
         android:textColor="@color/defaultTextColor"
         android:textSize="14sp"
-        tools:text="相机" />
+        tools:text="感冒" />
 
     <View
         android:id="@+id/tabView"
