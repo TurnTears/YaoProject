@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppThemeNoTitleBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/themeColor</item>
         <item name="colorPrimaryDark">@color/themeColor</item>
         <item name="colorAccent">@color/themeColor</item>
@@ -12,6 +12,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+
 
     <style name="TabLayout">
         <item name="android:layout_width">0dp</item>
@@ -38,6 +39,60 @@
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:textColor">@color/tabUnSelectColor</item>
         <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="AppTheme.Divison">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dividerHeight</item>
+        <item name="android:background">@color/colorDivison</item>
+        <item name="android:divider">@color/colorDivison</item>
+        <item name="android:dividerHeight">@dimen/dividerHeight</item>
+    </style>
+
+    <style name="AppTheme.Divison.Vertical">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/dividerHeight</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@color/colorDivison</item>
+    </style>
+
+    <style name="AppTheme.Wrap">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.Wrap.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.Label" parent="AppTheme.Wrap.Wrap">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextContent</item>
+    </style>
+
+    <style name="AppTheme.Label.Assistant">
+        <item name="android:textColor">@color/colorTextAssistant</item>
+    </style>
+
+    <style name="AppTheme.Button" parent="AppTheme.Wrap.Wrap">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/primary_button</item>
+    </style>
+
+    <style name="AppTheme.Button.Primary">
+        <item name="android:background">@drawable/primary_button</item>
     </style>
 
 </resources>

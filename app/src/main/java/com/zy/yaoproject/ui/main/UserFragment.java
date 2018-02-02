@@ -2,6 +2,9 @@ package com.zy.yaoproject.ui.main;
 
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.fragment.BaseFragment;
+import com.zy.yaoproject.ui.LoginActivity;
+
+import butterknife.OnClick;
 
 /**
  * Created by muzi on 2018/2/1.
@@ -10,8 +13,14 @@ import com.zy.yaoproject.base.fragment.BaseFragment;
  */
 
 public class UserFragment extends BaseFragment {
+
     @Override
     protected int bindLayout() {
         return R.layout.fragment_user;
+    }
+
+    @OnClick(R.id.button)
+    public void onViewClicked() {
+        startActivity(LoginActivity.class);
     }
 }

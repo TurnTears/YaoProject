@@ -19,7 +19,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
-        android:textColor="@color/defaultTextColor"
+        android:textColor="@color/colorTextContent"
         android:textSize="13sp"
         tools:text="全画幅" />
 

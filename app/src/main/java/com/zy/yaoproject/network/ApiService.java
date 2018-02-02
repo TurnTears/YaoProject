@@ -9,8 +9,20 @@ import retrofit2.http.Query;
 /**
  * Created by muzi on 2017/12/15.
  * 727784430@qq.com
+ * <p>
+ * 药品信息
  * https://www.showapi.com/api/view/93/33
  * https://www.showapi.com/api/view/1468/1
+ * <p>
+ * 健康咨询
+ * https://www.showapi.com/api/lookPoint/96
+ * <p>
+ * 疾病查询
+ * https://www.showapi.com/api/lookPoint/546
+ * <p>
+ * 健康知识
+ * https://www.showapi.com/api/lookPoint/90
+ * <p>
  * <p>
  * <p>状态码
  * 0，成功
