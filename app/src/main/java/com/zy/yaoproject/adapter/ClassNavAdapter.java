@@ -16,18 +16,18 @@ import java.util.List;
  * 727784430@qq.com
  */
 
-public class ClassNavAdapter extends BaseQuickAdapter<ClassifyEntity.DataBean,BaseViewHolder> {
+public class ClassNavAdapter extends BaseQuickAdapter<ClassifyEntity,BaseViewHolder> {
 
     private Context context;
 
-    public ClassNavAdapter( Context context,int layoutResId, @Nullable List<ClassifyEntity.DataBean> data) {
+    public ClassNavAdapter( Context context,int layoutResId, @Nullable List<ClassifyEntity> data) {
         super(layoutResId, data);
         this.context=context;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ClassifyEntity.DataBean item) {
-        helper.setText(R.id.tabText, item.getType());
+    protected void convert(BaseViewHolder helper, ClassifyEntity item) {
+        helper.setText(R.id.tabText, item.getClassify());
         if (item.isSelect()) {
             helper.setTextColor(R.id.tabText, ContextCompat.getColor(context, R.color.themeColor));
         } else {

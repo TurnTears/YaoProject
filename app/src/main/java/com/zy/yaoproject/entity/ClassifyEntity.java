@@ -1,25 +1,19 @@
 package com.zy.yaoproject.entity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by muzi on 2018/1/31.
+ * Created by muzi on 2018/2/2.
  * 727784430@qq.com
  */
 
 public class ClassifyEntity {
 
-
-    /**
-     * classify : 急性肾小球肾炎
-     * classifyId : 599ad2a0600b2149d689b757
-     */
-
     private String classify;
 
-    private String classifyId;
+    private boolean isSelect;
 
-    private List<String> classList;
+    private ArrayList<ClassifyChildEntity> entityList;
 
     public String getClassify() {
         return classify;
@@ -29,19 +23,19 @@ public class ClassifyEntity {
         this.classify = classify;
     }
 
-    public String getClassifyId() {
-        return classifyId;
+    public ArrayList<ClassifyChildEntity> getEntityList() {
+        return entityList;
     }
 
-    public void setClassifyId(String classifyId) {
-        this.classifyId = classifyId;
+    public void setEntityList(ArrayList<ClassifyChildEntity> entityList) {
+        this.entityList = entityList;
     }
 
-    public List<String> getClassList() {
-        return classList;
+    public boolean isSelect() {
+        return isSelect;
     }
 
-    public void setClassList(List<String> classList) {
-        this.classList = classList;
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 }

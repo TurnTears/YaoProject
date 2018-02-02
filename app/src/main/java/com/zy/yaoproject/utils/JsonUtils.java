@@ -1,11 +1,13 @@
 package com.zy.yaoproject.utils;
 
+import com.zy.yaoproject.entity.ClassifyChildEntity;
 import com.zy.yaoproject.entity.ClassifyEntity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,40 +17,68 @@ import java.util.List;
 
 public class JsonUtils {
 
-
     /**
-     * 分类数据
+     * 解析分类数据
      *
      * @param jsonObject
      * @return
      */
-    public static List<ClassifyEntity> parseClass(JSONObject jsonObject) {
-        List<ClassifyEntity> classifyEntityList = new ArrayList<>();
+    public static HashMap<String, ArrayList<ClassifyChildEntity>> parseClass(JSONObject jsonObject) {
+        HashMap<String, ArrayList<ClassifyChildEntity>> hashMap = new HashMap<>();
         JSONArray jsonArray = jsonObject.optJSONArray("data");
         if (jsonArray != null && jsonArray.length() > 0) {
             JSONObject object;
-            String oldClassName = null;
-            String curreClassName;
-            ClassifyEntity classifyEntity = null;
-            List<String> stringList = new ArrayList<>();
+            ClassifyChildEntity entity;
+            ArrayList<ClassifyChildEntity> childEntityList;
+            String newclassify;
             for (int i = 0; i < jsonArray.length(); i++) {
                 object = jsonArray.optJSONObject(i);
-                curreClassName = object.optString("class");
-                if (!oldClassName.equals(curreClassName)) {
-                    oldClassName = curreClassName;
-                    classifyEntity = new ClassifyEntity();
-                    stringList = new ArrayList<>();
-                    classifyEntity.setClassList(stringList);
-                    classifyEntity.setClassify(oldClassName);
-                    classifyEntity.setClassifyId(object.optString("classifyId"));
-                    stringList.add(object.optString("classify"));
-                } else {
-                    stringList.add(object.optString("classify"));
+                newclassify = object.optString("class");
+                childEntityList = hashMap.get(newclassify);
+                if (childEntityList == null) {
+                    childEntityList = new ArrayList<>();
                 }
-                classifyEntityList.add(classifyEntity);
+                entity = new ClassifyChildEntity();
+                entity.setClassify(object.optString("classify"));
+                entity.setClassifyId(object.optString("classifyId"));
+                childEntityList.add(entity);
+                hashMap.put(newclassify, childEntityList);
             }
         }
-        return classifyEntityList;
+        return hashMap;
+    }
+
+    /**
+     * 将分类数据map转list
+     *
+     * @param hashMap
+     * @return
+     */
+    public static List<ClassifyEntity> mapToList(HashMap<String, ArrayList<ClassifyChildEntity>> hashMap) {
+        List<ClassifyEntity> entityList = new ArrayList<>();
+        ClassifyEntity entity;
+        String other = "其它";
+        for (String classify : hashMap.keySet()) {
+            if (classify.equals(other)) {
+                continue;
+            }
+            entity = new ClassifyEntity();
+            entity.setClassify(classify);
+            entity.setEntityList(hashMap.get(classify));
+            entityList.add(entity);
+        }
+        ArrayList<ClassifyChildEntity> childEntityList = hashMap.get(other);
+        if (childEntityList != null) {
+            entity = new ClassifyEntity();
+            entity.setClassify(other);
+            entity.setEntityList(childEntityList);
+            entityList.add(entity);
+        }
+        return entityList;
+    }
+
+    public static List<ClassifyEntity> parseClassData(JSONObject jsonObject) {
+        return mapToList(parseClass(jsonObject));
     }
 
 }

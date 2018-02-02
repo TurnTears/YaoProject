@@ -1,10 +1,15 @@
 package com.zy.yaoproject.ui.main;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.zy.yaoproject.R;
+import com.zy.yaoproject.adapter.ClassChildAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
+import com.zy.yaoproject.entity.ClassifyChildEntity;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -19,8 +24,8 @@ public class ClassChildFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private String id;
-    private ClassFragment parentFragment;
+    private ClassChildAdapter adapter;
+    private ArrayList<ClassifyChildEntity> entityArrayList;
 
     @Override
     protected int bindLayout() {
@@ -30,8 +35,7 @@ public class ClassChildFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         super.initView(view);
-        id = getArguments().getString("id");
-        parentFragment = (ClassFragment) getParentFragment();
+        entityArrayList = getArguments().getParcelableArrayList("data");
         initRecyclerView();
     }
 
@@ -45,8 +49,10 @@ public class ClassChildFragment extends BaseFragment {
      * 初始化RecyclerView
      */
     private void initRecyclerView() {
-
+        adapter = new ClassChildAdapter(R.layout.item_class_child, entityArrayList);
+        adapter.setSpanSizeLookup((gridLayoutManager, position) -> 1);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+        recyclerView.setAdapter(adapter);
     }
-
 
 }
