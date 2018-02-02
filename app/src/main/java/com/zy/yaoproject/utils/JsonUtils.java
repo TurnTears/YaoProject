@@ -1,5 +1,7 @@
 package com.zy.yaoproject.utils;
 
+import com.zy.yaoproject.GlobalData;
+import com.zy.yaoproject.entity.ClassInfoEntity;
 import com.zy.yaoproject.entity.ClassifyChildEntity;
 import com.zy.yaoproject.entity.ClassifyEntity;
 
@@ -81,4 +83,47 @@ public class JsonUtils {
         return mapToList(parseClass(jsonObject));
     }
 
+    /**
+     * 解析药品分类信息
+     *
+     * @param jsonObject
+     * @return
+     */
+    public static List<ClassInfoEntity> parseClassInfo(JSONObject jsonObject) {
+        List<ClassInfoEntity> entityList = new ArrayList<>();
+        ClassInfoEntity entity;
+        JSONObject object;
+        JSONArray jsonArray = jsonObject.optJSONArray("data");
+        if (jsonArray != null && jsonArray.length() > 0) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                entity = new ClassInfoEntity();
+                object = jsonArray.optJSONObject(i);
+                entity.setClassifyId(object.optString("classifyId"));
+                entity.setDrugId(object.optString("drugId"));
+                entity.setDrugName(object.optString("drugName"));
+                entity.setManu(object.optString("manu"));
+                entity.setPzwh(object.optString("pzwh"));
+                entity.setPrice(createPrice());
+                entityList.add(entity);
+            }
+        }
+        return entityList;
+    }
+
+    /**
+     * 生成价格
+     * <p>
+     * 100以内随机数，保留两位小数
+     *
+     * @return
+     */
+    private static String createPrice() {
+        String price;
+        double random = Math.random() * 100;
+        if (random < 5) {
+            random = 9.90;
+        }
+        price = "￥" + GlobalData.formatPrice(random);
+        return price;
+    }
 }

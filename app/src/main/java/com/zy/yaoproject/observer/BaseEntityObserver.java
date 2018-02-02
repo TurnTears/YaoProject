@@ -44,7 +44,7 @@ public abstract class BaseEntityObserver<T> implements Observer<Result<T>> {
         if (EndConsumerHelper.setOnce(this.s, s, getClass())) {
             if (!NetUtils.isNetworkAvailable(context)) {//网络断开
                 onError(new Result(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG));
-                s.dispose();
+//                s.dispose();
                 return;
             }
             onStart();

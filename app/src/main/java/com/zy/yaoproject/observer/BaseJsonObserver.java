@@ -51,7 +51,7 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
         if (EndConsumerHelper.setOnce(this.s, s, getClass())) {
             if (!NetUtils.isNetworkAvailable(context)) {
                 onError(new Result(CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED, CodeContent.EXCEPTION_NETWORK_NOT_CONNECTED_MSG));
-                s.dispose();
+//                s.dispose();
                 return;
             }
             onStart();
@@ -75,9 +75,11 @@ public abstract class BaseJsonObserver implements Observer<ResponseBody> {
     public final void onNext(@NonNull ResponseBody responseBody) {
         try {
             jsonObject = new JSONObject(responseBody.string());
-            showapi_res_code = jsonObject.optInt("showapi_res_code");
-            showapi_res_error = jsonObject.optString("showapi_res_error");
+//            showapi_res_code = jsonObject.optInt("showapi_res_code");
+//            showapi_res_error = jsonObject.optString("showapi_res_error");
             showapi_res_body = jsonObject.optJSONObject("showapi_res_body");
+            showapi_res_code = showapi_res_body.optInt("ret_code");
+            showapi_res_error = showapi_res_body.optString("msg");
         } catch (Exception e) {
             e.printStackTrace();
         }

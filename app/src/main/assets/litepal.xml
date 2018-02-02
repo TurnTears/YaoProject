@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="neisha"></dbname>
+
+    <version value="1"></version>
+
+    <list>
+        <!--用户信息-->
+        <mapping class="com.zy.yaoproject.entity.UserInfnEntity"></mapping>
+    </list>
+</litepal>

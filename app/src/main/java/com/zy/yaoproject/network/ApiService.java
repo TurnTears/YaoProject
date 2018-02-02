@@ -70,7 +70,7 @@ public interface ApiService {
      */
     @GET("1468-2")
     Observable<ResponseBody> getClassInfo(@Query("classifyId") String classifyId,
-                                          @Query("page") String page,
+                                          @Query("page") int page,
                                           @Query("maxResult") String maxResult);
 
     /**
@@ -80,14 +80,12 @@ public interface ApiService {
      * @param searchType-searchType搜索关键字的类型:1、药品名称 2、药企名称 3、药准字号 4、药品Id
      * @param searchKey-查询的关键字
      * @param page-页码（可选）
-     * @param maxResult-当前页最大返回条目数（可选）
      * @return
      */
     @GET("1468-3")
     Observable<ResponseBody> getDrugDetail(@Query("classifyId") String classifyId,
                                            @Query("searchType") String searchType,
                                            @Query("searchKey") String searchKey,
-                                           @Query("page") String page,
-                                           @Query("maxResult") String maxResult);
+                                           @Query("page") int page);
 
 }

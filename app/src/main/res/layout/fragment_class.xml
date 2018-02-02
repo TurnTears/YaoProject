@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:icon_left_text=""
-            app:icon_right_text="@string/icon_search"
             app:title_text="分类" />
 
         <LinearLayout

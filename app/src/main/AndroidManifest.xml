@@ -31,8 +31,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.SearchActivity" />
+        <activity android:name=".ui.DrugDetailActivity" />
         <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.ClassActivity" />
     </application>
 
 </manifest>

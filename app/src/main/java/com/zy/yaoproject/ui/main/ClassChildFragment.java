@@ -9,6 +9,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.entity.ClassifyChildEntity;
+import com.zy.yaoproject.ui.ClassActivity;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class ClassChildFragment extends BaseFragment {
         };
         tagFlowLayout.setAdapter(adapter);
         tagFlowLayout.setOnTagClickListener((view, position, parent) -> {
-            showToast(entityArrayList.get(position).getClassifyId());
+            ClassActivity.startIntent(context, entityArrayList.get(position).getClassifyId());
             return false;
         });
     }

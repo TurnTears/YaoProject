@@ -16,10 +16,8 @@ import com.zy.yaoproject.entity.ClassifyEntity;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
 import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.JsonFragmentObserver;
-import com.zy.yaoproject.ui.SearchActivity;
 import com.zy.yaoproject.utils.JsonUtils;
 import com.zy.yaoproject.widget.titlebar.TitleBar;
-import com.zy.yaoproject.widget.titlebar.TitleBarRightClick;
 
 import org.json.JSONObject;
 
@@ -63,12 +61,6 @@ public class ClassFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         super.initView(view);
-        titleBar.setTitleBarClickListener(new TitleBarRightClick() {
-            @Override
-            public void onSimpleRightClick() {
-                startActivity(SearchActivity.class);
-            }
-        });
         initRefresh(refresh, () -> getData());
         initRecyclerView();
     }
