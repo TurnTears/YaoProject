@@ -1,35 +1,56 @@
 package com.zy.yaoproject;
 
 
+import com.zy.yaoproject.bean.FloorBean;
+import com.zy.yaoproject.bean.NeedBean;
+import com.zy.yaoproject.bean.RoomBean;
 import com.zy.yaoproject.entity.IconFontEntity;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by muzi on 2017/12/26.
- * 727784430@qq.com
  * 全局数据
  */
-
 public class GlobalData {
 
     //iconfont字体
     public static IconFontEntity iconFontEntity = new IconFontEntity();
 
-    /**
-     * 保留两个小数
-     * 构造方法的字符格式这里如果小数不足2位,会以0补足.
-     */
-    public static DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    //部门集合
+    public static List<FloorBean> floorBeanList = new ArrayList<>();
 
-    /**
-     * 格式化金额，保留两位小数
-     *
-     * @param o
-     * @return
-     */
-    public static String formatPrice(double o) {
-        return decimalFormat.format(o);
+    //科室集合
+    public static List<RoomBean> roomBeanList = new ArrayList<>();
+
+    static {
+
+    }
+
+
+    private RoomBean roomBean;
+    private NeedBean bean;
+    private List<NeedBean> beans;
+
+    private void initRoomeData() {
+        roomBean = new RoomBean();
+        roomBean.setName("泌尿外科");
+        beans = new ArrayList<>();
+        bean = new NeedBean();
+        bean.setName("检查手套");
+        bean.setUnit("付");
+        beans.add(bean);
+        bean = new NeedBean();
+        bean.setName("消毒片");
+        bean.setUnit("瓶");
+        beans.add(bean);
+        bean = new NeedBean();
+        bean.setName("一次性注射针");
+        bean.setUnit("支");
+        beans.add(bean);
+        roomBean.setBeanList(beans);
+
+
     }
 
 }

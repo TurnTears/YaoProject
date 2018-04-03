@@ -3,7 +3,6 @@ package com.zy.yaoproject.ui;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
 import com.zy.yaoproject.task.TypeFaceTask;
-import com.zy.yaoproject.ui.main.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +28,7 @@ public class WelcomeActivity extends BaseActivity {
                 Observable.timer(500, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(aLong -> {
-                            startActivity(MainActivity.class);
+                            startActivity(LoginActivity.class);
                             finish();
                         })
         );

@@ -91,7 +91,6 @@ public class ClassActivity extends BaseActivity {
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DrugDetailActivity.startIntent(context, entityList.get(position).getClassifyId(),entityList.get(position).getDrugName());
             }
         });
     }
