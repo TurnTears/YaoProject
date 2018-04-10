@@ -1,5 +1,7 @@
 package com.zy.yaoproject.ui;
 
+import android.os.Bundle;
+
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
 import com.zy.yaoproject.task.TypeFaceTask;
@@ -17,7 +19,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         initIconFont();
     }
 

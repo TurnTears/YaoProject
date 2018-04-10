@@ -1,5 +1,7 @@
 package com.zy.yaoproject.ui;
 
+import android.os.Bundle;
+
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
 
@@ -13,5 +15,9 @@ public class DepartmentActivity extends BaseActivity {
         return R.layout.activity_department;
     }
 
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
 
 }

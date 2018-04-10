@@ -1,5 +1,7 @@
 package com.zy.yaoproject.ui.main;
 
+import android.view.View;
+
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 
@@ -10,8 +12,14 @@ import com.zy.yaoproject.base.fragment.BaseFragment;
  */
 
 public class HomeFragment extends BaseFragment {
+
     @Override
     protected int bindLayout() {
         return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initView(View view) {
+
     }
 }

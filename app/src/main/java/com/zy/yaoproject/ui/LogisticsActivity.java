@@ -1,5 +1,7 @@
 package com.zy.yaoproject.ui;
 
+import android.os.Bundle;
+
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
 
@@ -12,4 +14,10 @@ public class LogisticsActivity extends BaseActivity {
     protected int bindLayout() {
         return R.layout.activity_logistics;
     }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
 }

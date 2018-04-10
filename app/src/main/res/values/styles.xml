@@ -95,4 +95,13 @@
         <item name="android:background">@drawable/primary_button</item>
     </style>
 
+    <style name="LoadingDialog" parent="@android:style/Theme.Holo.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:topDark">@color/white</item>
+        <item name="android:centerDark">@color/white</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

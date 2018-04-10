@@ -1,7 +1,5 @@
 package com.zy.yaoproject.network;
 
-import android.util.ArrayMap;
-
 import com.zy.yaoproject.app.App;
 import com.zy.yaoproject.utils.NetUtils;
 
@@ -11,8 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
-import okhttp3.FormBody;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,15 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitHelper {
 
-    private static ArrayMap<String, String> params = new ArrayMap<>();
-
     public static OkHttpClient mOkHttpClient;
 
     static {
         initOkHttpClient();
-
-        params.put("showapi_appid", ApiContent.APPID);
-        params.put("showapi_sign", ApiContent.SIGN);
     }
 
     /**
@@ -74,7 +65,7 @@ public class RetrofitHelper {
                             .connectTimeout(20, TimeUnit.SECONDS)
                             .writeTimeout(20, TimeUnit.SECONDS)
                             .readTimeout(20, TimeUnit.SECONDS)
-                            .addInterceptor(new CustomInterceptor())
+//                            .addInterceptor(new CustomInterceptor())
                             .build();
                 }
             }
@@ -84,40 +75,40 @@ public class RetrofitHelper {
     /**
      * 添加公共参数
      */
-    private static class CustomInterceptor implements Interceptor {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request oldRequest = chain.request();
-            //如果公共请求参数不为空,则构建新的请求
-            if (params != null) {
-                Request.Builder newRequestBuilder = oldRequest.newBuilder();
-                //GET请求则使用HttpUrl.Builder来构建
-                if ("GET".equalsIgnoreCase(oldRequest.method())) {
-                    HttpUrl.Builder httpUrlBuilder = oldRequest.url().newBuilder();
-                    for (String key : params.keySet()) {
-                        httpUrlBuilder.addQueryParameter(key, params.get(key));
-                    }
-                    newRequestBuilder.url(httpUrlBuilder.build());
-                } else {
-                    //如果原请求是表单请求
-                    if (oldRequest.body() instanceof FormBody) {
-                        FormBody.Builder formBodyBuilder = new FormBody.Builder();
-                        for (String key : params.keySet()) {
-                            formBodyBuilder.add(key, params.get(key));
-                        }
-                        FormBody oldFormBody = (FormBody) oldRequest.body();
-                        int size = oldFormBody.size();
-                        for (int i = 0; i < size; i++) {
-                            formBodyBuilder.add(oldFormBody.name(i), oldFormBody.value(i));
-                        }
-                        newRequestBuilder.post(formBodyBuilder.build());
-                    }
-                }
-                return chain.proceed(newRequestBuilder.build());
-            }
-            return chain.proceed(oldRequest);
-        }
-    }
+//    private static class CustomInterceptor implements Interceptor {
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//            Request oldRequest = chain.request();
+//            //如果公共请求参数不为空,则构建新的请求
+//            if (params != null) {
+//                Request.Builder newRequestBuilder = oldRequest.newBuilder();
+//                //GET请求则使用HttpUrl.Builder来构建
+//                if ("GET".equalsIgnoreCase(oldRequest.method())) {
+//                    HttpUrl.Builder httpUrlBuilder = oldRequest.url().newBuilder();
+//                    for (String key : params.keySet()) {
+//                        httpUrlBuilder.addQueryParameter(key, params.get(key));
+//                    }
+//                    newRequestBuilder.url(httpUrlBuilder.build());
+//                } else {
+//                    //如果原请求是表单请求
+//                    if (oldRequest.body() instanceof FormBody) {
+//                        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+//                        for (String key : params.keySet()) {
+//                            formBodyBuilder.add(key, params.get(key));
+//                        }
+//                        FormBody oldFormBody = (FormBody) oldRequest.body();
+//                        int size = oldFormBody.size();
+//                        for (int i = 0; i < size; i++) {
+//                            formBodyBuilder.add(oldFormBody.name(i), oldFormBody.value(i));
+//                        }
+//                        newRequestBuilder.post(formBodyBuilder.build());
+//                    }
+//                }
+//                return chain.proceed(newRequestBuilder.build());
+//            }
+//            return chain.proceed(oldRequest);
+//        }
+//    }
 
     /**
      * 为okhttp添加缓存，这里是考虑到服务器不支持缓存时，从而让okhttp支持缓存

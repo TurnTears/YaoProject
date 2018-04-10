@@ -13,15 +13,18 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
- * Created by muzi on 2018/1/31.
+ * Created by muzi on 2018/1/12.
  * 727784430@qq.com
  */
 
-public class RxActivity extends SupportActivity implements LifecycleProvider<ActivityEvent> {
+public abstract class RxActivity extends SupportActivity implements LifecycleProvider<ActivityEvent> {
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
@@ -87,6 +90,11 @@ public class RxActivity extends SupportActivity implements LifecycleProvider<Act
         lifecycleSubject.onNext(ActivityEvent.DESTROY);
         super.onDestroy();
     }
-}
 
+    protected <T> ObservableTransformer<T, T> applySchedulers() {
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+}
 

@@ -19,7 +19,6 @@
             app:mwhCloseColor="#31AFFE"
             app:mwhStartColor="@color/colorPrimary" />
 
-
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
@@ -100,7 +99,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:padding="10dp"
-            android:text="忘记密码？" />
+            android:text="忘记密码？"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/login"
@@ -128,7 +128,8 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:text="还没有账号？注册"
-            android:textColor="@color/themeColor" />
+            android:textColor="@color/themeColor"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 </ScrollView>

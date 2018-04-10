@@ -1,5 +1,6 @@
 package com.zy.yaoproject.ui;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
@@ -24,17 +25,18 @@ public class LoginActivity extends BaseActivity {
         return R.layout.activity_login;
     }
 
+    @Override
+    protected void initView(Bundle savedInstanceState) {
 
-    @OnClick({R.id.forget, R.id.login, R.id.register})
+    }
+
+    @OnClick({R.id.login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.forget:
-                break;
             case R.id.login:
-                startActivity(DepartmentActivity.class);
-                break;
-            case R.id.register:
-                startActivity(LogisticsActivity.class);
+//                startActivity(DepartmentActivity.class);
+                showProgress();
+//                startActivity(LogisticsActivity.class);
                 break;
         }
     }

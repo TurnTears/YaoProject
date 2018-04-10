@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 
 import com.zy.yaoproject.base.activity.BaseActivity;
 
+
 /**
- * Created by muzi on 2018/1/31.
+ * Created by muzi on 2017/12/28.
  * 727784430@qq.com
  */
 
-public abstract class BaseFragment extends BaseUIFragment {
+public abstract class BaseFragment extends BaseViewFragment {
 
-    private BaseActivity baseActivity;
+    protected BaseActivity baseActivity;
 
     @Nullable
     @Override
@@ -33,12 +34,20 @@ public abstract class BaseFragment extends BaseUIFragment {
         baseActivity.startActivity(clazz, bundle);
     }
 
-    protected void showToast(String s) {
-        baseActivity.showToast(s);
+    /**
+     * 隐藏软键盘
+     */
+    protected void hiddenKeyboard() {
+        baseActivity.hiddenKeyboard();
     }
 
-    protected void showToast(int resId) {
-        baseActivity.showToast(resId);
+    /**
+     * 显示键盘
+     *
+     * @param view
+     */
+    protected void showKeyboard(View view) {
+        baseActivity.showKeyboard(view);
     }
 
     /**

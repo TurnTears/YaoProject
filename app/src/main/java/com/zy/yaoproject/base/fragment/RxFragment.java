@@ -13,6 +13,9 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -105,5 +108,11 @@ public abstract class RxFragment extends SupportFragment implements LifecyclePro
         lifecycleSubject.onNext(FragmentEvent.DETACH);
         super.onDetach();
     }
+
+    protected <T> ObservableTransformer<T, T> applySchedulers() {
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }
 

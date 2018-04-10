@@ -1,5 +1,6 @@
 package com.zy.yaoproject.ui.main;
 
+import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.widget.FrameLayout;
 
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
         initFragment();
         initTab();
     }

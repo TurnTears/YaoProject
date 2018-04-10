@@ -2,7 +2,7 @@ package com.zy.yaoproject.app;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
+
 
 /**
  * Created by muzi on 2018/1/31.
@@ -21,7 +21,5 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-
-        LeakCanary.install(this);
     }
 }

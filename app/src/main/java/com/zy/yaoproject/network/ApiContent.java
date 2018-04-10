@@ -7,9 +7,6 @@ package com.zy.yaoproject.network;
 
 public class ApiContent {
 
-    public static String APPID = "55126";
-    public static String SIGN = "d064d15ee51148e69bac0da1dff617ab";
-
-    public static String API_URL="http://route.showapi.com/";
+    public static String API_URL="http://shagoulipeng.tunnel.echomod.cn";
 
 }
