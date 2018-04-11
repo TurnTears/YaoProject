@@ -1,6 +1,7 @@
 package com.zy.yaoproject.network;
 
 
+import com.zy.yaoproject.bean.AllDataBean;
 import com.zy.yaoproject.bean.LoginBean;
 
 import io.reactivex.Observable;
@@ -42,6 +43,6 @@ public interface ApiService {
      * @return
      */
     @GET("/zy/system/getData")
-    Observable<ResponseBody> getSupply();
+    Observable<AllDataBean> getSupply();
 
 }

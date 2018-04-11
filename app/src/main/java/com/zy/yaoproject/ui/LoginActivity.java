@@ -45,14 +45,11 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.login, R.id.register})
+    @OnClick({R.id.login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login:
                 acceptePsd();
-                break;
-            case R.id.register:
-                test();
                 break;
         }
     }
@@ -101,24 +98,15 @@ public class LoginActivity extends BaseActivity {
                         super.onSuccess(userEntity);
                         UserInfoUtils.setMob(name);
                         UserInfoUtils.setePsd(psd);
-//                        switch (userEntity.getDepart_flag()) {
-//                            case "yisheng":
-//                                startActivity(DepartmentActivity.class);
-//                                break;
-//                            case "houqin":
-//                                startActivity(LogisticsActivity.class);
-//                                break;
-//                        }
+                        switch (userEntity.getDepart_flag()) {
+                            case "yisheng":
+                                startActivity(DepartmentActivity.class);
+                                break;
+                            case "houqin":
+                                startActivity(LogisticsActivity.class);
+                                break;
+                        }
                     }
-                });
-    }
-
-    private void test() {
-        RxRetrofit.getApi()
-                .getSupply()
-                .compose(applySchedulers())
-                .subscribe(responseBody -> {
-
                 });
     }
 }

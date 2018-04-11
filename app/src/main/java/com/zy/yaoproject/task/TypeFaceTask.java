@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 
 import com.zy.yaoproject.GlobalData;
-import com.zy.yaoproject.bean.IconFontEntity;
+import com.zy.yaoproject.bean.IconFontBean;
 
 
 /**
@@ -13,7 +13,7 @@ import com.zy.yaoproject.bean.IconFontEntity;
  * 727784430@qq.com
  */
 
-public class TypeFaceTask extends AsyncTask<Context, Integer, IconFontEntity> {
+public class TypeFaceTask extends AsyncTask<Context, Integer, IconFontBean> {
 
     private Context context;
     private onComplete complete;
@@ -28,13 +28,13 @@ public class TypeFaceTask extends AsyncTask<Context, Integer, IconFontEntity> {
     }
 
     @Override
-    protected IconFontEntity doInBackground(Context... params) {
+    protected IconFontBean doInBackground(Context... params) {
         GlobalData.iconFontEntity.setTypeface(Typeface.createFromAsset(context.getAssets(), "iconfont.ttf"));
         return GlobalData.iconFontEntity;
     }
 
     @Override
-    protected void onPostExecute(IconFontEntity iconFontEntity) {
+    protected void onPostExecute(IconFontBean iconFontEntity) {
         super.onPostExecute(iconFontEntity);
         if (complete != null) {
             complete.onComplete();

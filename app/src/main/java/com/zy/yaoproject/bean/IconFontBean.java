@@ -2,7 +2,7 @@ package com.zy.yaoproject.bean;
 
 import android.graphics.Typeface;
 
-public class IconFontEntity {
+public class IconFontBean {
 
     private Typeface typeface;
 

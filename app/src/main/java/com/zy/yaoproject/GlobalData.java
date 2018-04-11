@@ -1,7 +1,7 @@
 package com.zy.yaoproject;
 
 
-import com.zy.yaoproject.bean.IconFontEntity;
+import com.zy.yaoproject.bean.IconFontBean;
 
 /**
  * 全局数据
@@ -9,6 +9,6 @@ import com.zy.yaoproject.bean.IconFontEntity;
 public class GlobalData {
 
     //iconfont字体
-    public static IconFontEntity iconFontEntity = new IconFontEntity();
+    public static IconFontBean iconFontEntity = new IconFontBean();
 
 }

@@ -40,6 +40,5 @@ class Wave {
         path.lineTo(width, 0);
         path.close();
 
-
     }
 }

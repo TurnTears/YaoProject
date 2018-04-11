@@ -1,18 +1,19 @@
 package com.zy.yaoproject.bean;
 
+/**
+ * Created by muzi on 2018/4/11.
+ * 727784430@qq.com
+ */
 
-public class Bean {
+public class NeeadBean {
+
+    /**
+     * name : 检查手套
+     * unit : 付
+     */
 
     private String name;
-
-    private String unit;//单位
-
-    public Bean() {
-    }
-
-    public Bean(String name) {
-        this.name = name;
-    }
+    private String unit;
 
     public String getName() {
         return name;
@@ -29,4 +30,5 @@ public class Bean {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
 }

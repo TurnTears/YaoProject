@@ -133,7 +133,7 @@
             android:paddingTop="10dp"
             android:text="还没有账号？注册"
             android:textColor="@color/themeColor"
-            android:visibility="visible" />
+            android:visibility="invisible" />
 
     </RelativeLayout>
 </ScrollView>
