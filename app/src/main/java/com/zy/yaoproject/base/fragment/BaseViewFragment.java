@@ -67,7 +67,7 @@ public abstract class BaseViewFragment extends BaseInitFragment implements IBase
     @Override
     public void hideProgress() {
         if (loadingDialog != null) {
-            loadingDialog.hide();
+            loadingDialog.dismiss();
         }
     }
 

@@ -3,7 +3,7 @@ package com.zy.yaoproject.observer;
 import android.accounts.NetworkErrorException;
 
 import com.zy.yaoproject.base.inter.IBaseView;
-import com.zy.yaoproject.bean.BaseEntity;
+import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.network.ErrorHandle;
 import com.zy.yaoproject.utils.NetUtils;
 
@@ -87,7 +87,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
      *
      * @param t
      */
-    protected void onError(@NonNull BaseEntity t) {
+    protected void onError(@NonNull BaseBean t) {
         onComplete();
     }
 
@@ -97,15 +97,6 @@ public abstract class BaseObserver<T> implements Observer<T> {
      * @param t
      */
     protected void onSuccess(@NonNull T t) {
-
-    }
-
-    /**
-     * 其他情况
-     *
-     * @param t
-     */
-    protected void onOther(@NonNull T t) {
 
     }
 

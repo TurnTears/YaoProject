@@ -67,7 +67,7 @@ public abstract class BaseViewActivity extends BaseInitActivity implements IBase
     @Override
     public void hideProgress() {
         if (loadingDialog != null) {
-            loadingDialog.hide();
+            loadingDialog.dismiss();
         }
     }
 

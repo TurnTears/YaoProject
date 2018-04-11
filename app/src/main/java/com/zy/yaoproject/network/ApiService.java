@@ -1,10 +1,14 @@
 package com.zy.yaoproject.network;
 
 
+import com.zy.yaoproject.bean.LoginBean;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.POST;
 
 /**
  * Created by muzi on 2018/04/10.
@@ -13,7 +17,32 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("/zy/user/get")
-    Observable<ResponseBody> getTest(@Query("1") String state);
+    /**
+     * 登录
+     *
+     * @param loginName
+     * @param password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/zy/user/login")
+    Observable<LoginBean> login(@Field("loginName") String loginName, @Field("password") String password);
+
+    /**
+     * 退出
+     *
+     * @return
+     */
+    @GET("/zy/user/logout")
+    Observable<ResponseBody> logout();
+
+    /**
+     * 获取补给信息
+     *
+     * @return
+     */
+    @GET("/zy/system/getData")
+    Observable<ResponseBody> getSupply();
+
 
 }

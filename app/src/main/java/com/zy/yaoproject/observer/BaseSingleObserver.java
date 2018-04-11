@@ -4,7 +4,7 @@ import android.accounts.NetworkErrorException;
 import android.support.annotation.IntDef;
 
 import com.zy.yaoproject.base.inter.IBaseView;
-import com.zy.yaoproject.bean.BaseEntity;
+import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.network.ErrorHandle;
 import com.zy.yaoproject.utils.NetUtils;
 
@@ -108,7 +108,7 @@ public abstract class BaseSingleObserver<T> implements SingleObserver<T> {
      *
      * @param t
      */
-    protected void onError(@NonNull BaseEntity t) {
+    protected void onError(@NonNull BaseBean t) {
         onComplete();
     }
 

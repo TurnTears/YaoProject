@@ -5,11 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-/**
- * Created by muzi on 2017/9/28.
- * 727784430@qq.com
- */
-
 public class NsGridLayoutManager extends GridLayoutManager {
 
     private boolean isScrollEnabled = true;

@@ -2,10 +2,7 @@ package com.zy.yaoproject.bean;
 
 import java.util.List;
 
-/**
- * Created by muzi on 2018/3/31.
- * 727784430@qq.com
- */
+
 public class RoomBean  extends Bean{
 
     private List<NeedBean> beanList;

@@ -46,16 +46,16 @@ public class LoadingDialog {
         }
     }
 
-    public void hide() {
-        if (dialog != null && dialog.isShowing()) {
-            indicatorView.hide();
-            dialog.hide();
-        }
-    }
+//    public void hide() {
+//        if (dialog != null && dialog.isShowing()) {
+//            dialog.hide();
+//        }
+//    }
 
     public void dismiss() {
         if (dialog != null && dialog.isShowing()) {
             try {
+                indicatorView.hide();
                 dialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();

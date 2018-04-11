@@ -2,10 +2,15 @@ package com.zy.yaoproject.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
+import com.zy.yaoproject.bean.LoginBean;
+import com.zy.yaoproject.network.RxRetrofit;
+import com.zy.yaoproject.observer.EntityObserver;
+import com.zy.yaoproject.utils.StringUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,6 +25,8 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.password)
     EditText password;
 
+    private String name, psd;
+
     @Override
     protected int bindLayout() {
         return R.layout.activity_login;
@@ -27,17 +34,55 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
+        password.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == EditorInfo.IME_ACTION_NEXT || id == EditorInfo.IME_NULL) {
+                acceptePsd();
+                return true;
+            }
+            return false;
+        });
     }
 
     @OnClick({R.id.login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login:
-//                startActivity(DepartmentActivity.class);
-                showProgress();
-//                startActivity(LogisticsActivity.class);
+                acceptePsd();
                 break;
         }
+    }
+
+    private void acceptePsd() {
+        name = username.getText().toString().trim();
+        if (StringUtils.isEmpty(name)) {
+            showToast("请输入账号");
+            return;
+        }
+        psd = password.getText().toString().trim();
+        if (StringUtils.isEmpty(psd)) {
+            showToast("请输入密码");
+            return;
+        }
+        login();
+    }
+
+    private void login() {
+        RxRetrofit.getApi()
+                .login(name, psd)
+                .compose(applySchedulers())
+                .subscribe(new EntityObserver<LoginBean>(this) {
+                    @Override
+                    protected void onSuccess(LoginBean userEntity) {
+                        super.onSuccess(userEntity);
+                        switch (userEntity.getDepart_flag()) {
+                            case "yisheng":
+                                startActivity(DepartmentActivity.class);
+                                break;
+                            case "houqin":
+                                startActivity(LogisticsActivity.class);
+                                break;
+                        }
+                    }
+                });
     }
 }

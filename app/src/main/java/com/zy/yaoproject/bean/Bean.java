@@ -1,9 +1,6 @@
 package com.zy.yaoproject.bean;
 
-/**
- * Created by muzi on 2018/3/31.
- * 727784430@qq.com
- */
+
 public class Bean {
 
     private String name;

@@ -2,7 +2,7 @@ package com.zy.yaoproject.observer;
 
 
 import com.zy.yaoproject.base.inter.IBaseView;
-import com.zy.yaoproject.bean.BaseEntity;
+import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.network.ErrorHandle;
 import com.zy.yaoproject.utils.StringUtils;
 
@@ -11,7 +11,7 @@ import com.zy.yaoproject.utils.StringUtils;
  * 727784430@qq.com
  */
 
-public abstract class EntityObserver<T extends BaseEntity> extends BaseObserver<T> {
+public abstract class EntityObserver<T extends BaseBean> extends BaseObserver<T> {
 
     private IBaseView iBaseView;
 
@@ -29,18 +29,18 @@ public abstract class EntityObserver<T extends BaseEntity> extends BaseObserver<
     @Override
     public final void onNext(T t) {
         super.onNext(t);
-        switch (t.getCode()) {
+        switch (t.getStatus()) {
             case ErrorHandle.SUCCESS:
                 onSuccess(t);
                 break;
             default:
-                onOther(t);
+                onError(t);
                 break;
         }
     }
 
     @Override
-    protected void onError(BaseEntity t) {
+    protected void onError(BaseBean t) {
         super.onError(t);
         if (!StringUtils.isEmpty(t.getMsg()) && isShowToast()) {
             iBaseView.showToast(t.getMsg());

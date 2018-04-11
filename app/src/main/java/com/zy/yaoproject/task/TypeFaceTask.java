@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 
 import com.zy.yaoproject.GlobalData;
-import com.zy.yaoproject.entity.IconFontEntity;
+import com.zy.yaoproject.bean.IconFontEntity;
 
 
 /**

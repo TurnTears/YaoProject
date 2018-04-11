@@ -2,7 +2,7 @@ package com.zy.yaoproject.observer;
 
 
 import com.zy.yaoproject.base.inter.IBaseView;
-import com.zy.yaoproject.bean.BaseEntity;
+import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.utils.StringUtils;
 
 import java.util.Date;
@@ -47,7 +47,7 @@ public abstract class ResponseObserver<T> extends BaseObserver<Response<T>> {
     }
 
     @Override
-    protected void onError(BaseEntity t) {
+    protected void onError(BaseBean t) {
         super.onError(t);
         if (!StringUtils.isEmpty(t.getMsg()) && isShowToast()) {
             iBaseView.showToast(t.getMsg());

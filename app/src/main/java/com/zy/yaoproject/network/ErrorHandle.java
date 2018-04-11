@@ -6,7 +6,7 @@ import android.accounts.NetworkErrorException;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.zy.yaoproject.bean.BaseEntity;
+import com.zy.yaoproject.bean.BaseBean;
 
 import java.net.ConnectException;
 import java.net.SocketException;
@@ -59,7 +59,7 @@ public class ErrorHandle {
     public final static int EXCEPTION_OTHER_ERROR = 0x0001007;
     public final static String EXCEPTION_OTHER_ERROR_MSG = "未知错误";
 
-    public static BaseEntity handleException(Throwable e) {
+    public static BaseBean handleException(Throwable e) {
 
         errorCode = ErrorHandle.EXCEPTION_OTHER_ERROR;
         errorReason = ErrorHandle.EXCEPTION_OTHER_ERROR_MSG;
@@ -91,7 +91,7 @@ public class ErrorHandle {
             errorReason = ErrorHandle.EXCEPTION_CLASS_CAST_MSG;
             errorCode = ErrorHandle.EXCEPTION_CLASS_CAST;
         }
-        return new BaseEntity(errorReason, errorCode);
+        return new BaseBean(errorReason, errorCode);
     }
 
 }
