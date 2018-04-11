@@ -5,6 +5,7 @@ import com.zy.yaoproject.base.inter.IBaseView;
 import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.network.ErrorHandle;
 import com.zy.yaoproject.utils.StringUtils;
+import com.zy.yaoproject.utils.UserInfoUtils;
 
 /**
  * Created by muzi on 2018/3/2.
@@ -25,13 +26,25 @@ public abstract class EntityObserver<T extends BaseBean> extends BaseObserver<T>
         this.iBaseView = iBaseView;
     }
 
-
     @Override
     public final void onNext(T t) {
         super.onNext(t);
         switch (t.getStatus()) {
             case ErrorHandle.SUCCESS:
                 onSuccess(t);
+                break;
+            case ErrorHandle.NO_LOGIN:
+                //没有登录
+                UserInfoUtils.logOut();
+                switch (onLoginOut()) {
+                    case LOGIN_TOAST:
+                        iBaseView.showToast(ErrorHandle.NO_LOGIN_MSG);
+                        break;
+                    case LOGIN_LOGIN:
+                        iBaseView.startLogin();
+                        break;
+                }
+                onLoginOut();
                 break;
             default:
                 onError(t);

@@ -32,7 +32,7 @@ public class ErrorHandle {
 
     public final static int SUCCESS = 200;
 
-    public final static int NO_LOGIN = 201;
+    public final static int NO_LOGIN = 500;
     public final static String NO_LOGIN_MSG = "请先登录";
 
     public final static int EXCEPTION_ERROR_NETWORK_CODE = 0x0001000;

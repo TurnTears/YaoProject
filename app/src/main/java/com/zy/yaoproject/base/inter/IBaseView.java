@@ -59,4 +59,9 @@ public interface IBaseView {
      */
     void close();
 
+    /**
+     * 登录
+     */
+    void startLogin();
+
 }

@@ -1,5 +1,8 @@
 package com.zy.yaoproject.network;
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.zy.yaoproject.app.App;
 import com.zy.yaoproject.utils.NetUtils;
 
@@ -58,14 +61,14 @@ public class RetrofitHelper {
                     //设置Http缓存
                     Cache cache = new Cache(new File(App.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 10);
                     mOkHttpClient = new OkHttpClient.Builder()
-                            .cache(cache)
+//                            .cache(cache)
                             .addInterceptor(interceptor)
                             .addNetworkInterceptor(new CacheInterceptor())
                             .retryOnConnectionFailure(true)
                             .connectTimeout(20, TimeUnit.SECONDS)
                             .writeTimeout(20, TimeUnit.SECONDS)
                             .readTimeout(20, TimeUnit.SECONDS)
-//                            .addInterceptor(new CustomInterceptor())
+                            .cookieJar(new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(App.getInstance())))
                             .build();
                 }
             }

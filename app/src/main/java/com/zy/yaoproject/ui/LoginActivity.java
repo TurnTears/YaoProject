@@ -11,6 +11,7 @@ import com.zy.yaoproject.bean.LoginBean;
 import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.EntityObserver;
 import com.zy.yaoproject.utils.StringUtils;
+import com.zy.yaoproject.utils.UserInfoUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,8 +35,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        getSaveInfo();
         password.setOnEditorActionListener((textView, id, keyEvent) -> {
-            if (id == EditorInfo.IME_ACTION_NEXT || id == EditorInfo.IME_NULL) {
+            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 acceptePsd();
                 return true;
             }
@@ -43,15 +45,35 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.login})
+    @OnClick({R.id.login, R.id.register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login:
                 acceptePsd();
                 break;
+            case R.id.register:
+                test();
+                break;
         }
     }
 
+    /**
+     * 获取保存的账号密码
+     */
+    private void getSaveInfo() {
+        name = UserInfoUtils.getMob();
+        if (!StringUtils.isEmpty(name)) {
+            username.setText(name);
+        }
+        psd = UserInfoUtils.getPsd();
+        if (!StringUtils.isEmpty(name)) {
+            password.setText(psd);
+        }
+    }
+
+    /**
+     * 验证账号密码
+     */
     private void acceptePsd() {
         name = username.getText().toString().trim();
         if (StringUtils.isEmpty(name)) {
@@ -66,6 +88,9 @@ public class LoginActivity extends BaseActivity {
         login();
     }
 
+    /**
+     * 登录
+     */
     private void login() {
         RxRetrofit.getApi()
                 .login(name, psd)
@@ -74,15 +99,26 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     protected void onSuccess(LoginBean userEntity) {
                         super.onSuccess(userEntity);
-                        switch (userEntity.getDepart_flag()) {
-                            case "yisheng":
-                                startActivity(DepartmentActivity.class);
-                                break;
-                            case "houqin":
-                                startActivity(LogisticsActivity.class);
-                                break;
-                        }
+                        UserInfoUtils.setMob(name);
+                        UserInfoUtils.setePsd(psd);
+//                        switch (userEntity.getDepart_flag()) {
+//                            case "yisheng":
+//                                startActivity(DepartmentActivity.class);
+//                                break;
+//                            case "houqin":
+//                                startActivity(LogisticsActivity.class);
+//                                break;
+//                        }
                     }
+                });
+    }
+
+    private void test() {
+        RxRetrofit.getApi()
+                .getSupply()
+                .compose(applySchedulers())
+                .subscribe(responseBody -> {
+
                 });
     }
 }

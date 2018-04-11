@@ -1,11 +1,13 @@
 package com.zy.yaoproject.base.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.inter.IBaseView;
+import com.zy.yaoproject.ui.LoginActivity;
 import com.zy.yaoproject.utils.ToastUtils;
 import com.zy.yaoproject.widget.LoadingDialog;
 
@@ -94,4 +96,8 @@ public abstract class BaseViewActivity extends BaseInitActivity implements IBase
         finish();
     }
 
+    @Override
+    public void startLogin() {
+        startActivity(new Intent(getContext(), LoginActivity.class));
+    }
 }

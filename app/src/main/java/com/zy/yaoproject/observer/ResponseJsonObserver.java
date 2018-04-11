@@ -3,6 +3,7 @@ package com.zy.yaoproject.observer;
 
 import com.zy.yaoproject.base.inter.IBaseView;
 import com.zy.yaoproject.network.ErrorHandle;
+import com.zy.yaoproject.utils.UserInfoUtils;
 
 import org.json.JSONObject;
 
@@ -48,6 +49,19 @@ public abstract class ResponseJsonObserver<T extends ResponseBody> extends Respo
         switch (code) {
             case ErrorHandle.SUCCESS:
                 onSuccess(jsonObject, date);
+                break;
+            case ErrorHandle.NO_LOGIN:
+                //没有登录
+                UserInfoUtils.logOut();
+                switch (onLoginOut()) {
+                    case LOGIN_TOAST:
+                        iBaseView.showToast(ErrorHandle.NO_LOGIN_MSG);
+                        break;
+                    case LOGIN_LOGIN:
+                        iBaseView.startLogin();
+                        break;
+                }
+                onLoginOut();
                 break;
             default:
                 onOther(jsonObject, date, code);

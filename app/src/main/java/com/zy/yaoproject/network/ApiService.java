@@ -44,5 +44,4 @@ public interface ApiService {
     @GET("/zy/system/getData")
     Observable<ResponseBody> getSupply();
 
-
 }

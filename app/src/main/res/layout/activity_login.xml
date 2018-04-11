@@ -34,7 +34,7 @@
             android:drawablePadding="15dp"
             android:drawableStart="@drawable/ic_login_account"
             android:hint="用户名"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:maxLines="1"
             android:padding="3dp"
             android:textColor="#444444"
@@ -133,7 +133,7 @@
             android:paddingTop="10dp"
             android:text="还没有账号？注册"
             android:textColor="@color/themeColor"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
     </RelativeLayout>
 </ScrollView>

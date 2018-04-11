@@ -1,11 +1,15 @@
 package com.zy.yaoproject.observer;
 
 import android.accounts.NetworkErrorException;
+import android.support.annotation.IntDef;
 
 import com.zy.yaoproject.base.inter.IBaseView;
 import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.network.ErrorHandle;
 import com.zy.yaoproject.utils.NetUtils;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -137,6 +141,31 @@ public abstract class BaseObserver<T> implements Observer<T> {
      */
     @Override
     public void onError(Throwable e) {
+        e.printStackTrace();
         onError(ErrorHandle.handleException(e));
     }
+
+
+    /**
+     * 没有登录
+     *
+     * @return 操作
+     * -1：toast提示
+     * 0：不做处理
+     * 1：打开登录Activity
+     */
+    public static final int LOGIN_TOAST = -1;
+    public static final int LOGIN_NO_ACTION = 0;
+    public static final int LOGIN_LOGIN = 1;
+
+    @IntDef({LOGIN_NO_ACTION, LOGIN_TOAST, LOGIN_LOGIN})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LoginAction {
+    }
+
+    protected @LoginAction
+    int onLoginOut() {
+        return LOGIN_TOAST;
+    }
+
 }
