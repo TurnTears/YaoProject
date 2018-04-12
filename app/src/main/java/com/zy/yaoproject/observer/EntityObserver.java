@@ -12,7 +12,7 @@ import com.zy.yaoproject.utils.UserInfoUtils;
  * 727784430@qq.com
  */
 
-public abstract class EntityObserver<T extends BaseBean> extends BaseObserver<T> {
+public class EntityObserver<T extends BaseBean> extends BaseObserver<T> {
 
     private IBaseView iBaseView;
 

@@ -1,5 +1,9 @@
 package com.zy.yaoproject.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +11,7 @@ import java.util.List;
  * 727784430@qq.com
  */
 
-public class DataBean {
+public class DataBean implements Parcelable {
 
     /**
      * id : 1
@@ -43,4 +47,37 @@ public class DataBean {
         this.list = list;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeList(this.list);
+    }
+
+    public DataBean() {
+    }
+
+    protected DataBean(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.list = new ArrayList<ListBean>();
+        in.readList(this.list, ListBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+        @Override
+        public DataBean createFromParcel(Parcel source) {
+            return new DataBean(source);
+        }
+
+        @Override
+        public DataBean[] newArray(int size) {
+            return new DataBean[size];
+        }
+    };
 }

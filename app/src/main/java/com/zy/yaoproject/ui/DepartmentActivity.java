@@ -1,8 +1,10 @@
 package com.zy.yaoproject.ui;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
 import com.zy.yaoproject.bean.AllDataBean;
@@ -10,12 +12,22 @@ import com.zy.yaoproject.bean.DataBean;
 import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.EntityObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 科室
- */
+import butterknife.BindView;
+
+
 public class DepartmentActivity extends BaseActivity {
+
+    @BindView(R.id.tab)
+    SlidingTabLayout tab;
+    @BindView(R.id.viewpager)
+    ViewPager viewpager;
+
+    private String[] titles;
+    private List<DataBean> dataBeans;
+    private ArrayList<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected int bindLayout() {
@@ -24,7 +36,6 @@ public class DepartmentActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -37,9 +48,24 @@ public class DepartmentActivity extends BaseActivity {
                     @Override
                     protected void onSuccess(AllDataBean data) {
                         super.onSuccess(data);
-                        List<DataBean> data1 = data.getData();
-                        Log.d("DepartmentActivity", data1.get(0).getList().get(0).getNeeadBean().get(0).getName());
+                        dataBeans = data.getData();
+                        initFragment();
                     }
                 });
     }
+
+    private void initFragment() {
+        if (dataBeans != null && dataBeans.size() > 0 && titles == null) {
+            titles = new String[dataBeans.size()];
+        }
+        for (int i = 0; i < dataBeans.size(); i++) {
+            DataBean dataBean = dataBeans.get(i);
+            titles[i] = dataBean.getName();
+            DepartmentFragment fragment = DepartmentFragment.getInstance(dataBean);
+            fragments.add(fragment);
+        }
+
+        tab.setViewPager(viewpager, titles, this, fragments);
+    }
+
 }
