@@ -18,12 +18,4 @@
         android:textSize="14sp"
         tools:text="脑外科" />
 
-    <View
-        android:id="@+id/tabView"
-        android:layout_width="4dp"
-        android:layout_height="15dp"
-        android:layout_gravity="center_vertical"
-        android:background="@color/themeColor"
-        android:visibility="invisible" />
-
 </FrameLayout>

@@ -20,7 +20,6 @@ public class ListBean implements Parcelable {
 
     private String id;
     private String name;
-    private boolean isSelect;
     private List<NeeadBean> neeadBean;
 
     public ListBean() {
@@ -42,13 +41,6 @@ public class ListBean implements Parcelable {
         this.name = name;
     }
 
-    public boolean isSelect() {
-        return isSelect;
-    }
-
-    public void setSelect(boolean select) {
-        isSelect = select;
-    }
 
     public List<NeeadBean> getNeeadBean() {
         return neeadBean;
@@ -67,14 +59,12 @@ public class ListBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.neeadBean);
     }
 
     protected ListBean(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
-        this.isSelect = in.readByte() != 0;
         this.neeadBean = in.createTypedArrayList(NeeadBean.CREATOR);
     }
 

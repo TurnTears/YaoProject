@@ -1,6 +1,7 @@
 package com.zy.yaoproject.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -37,12 +38,15 @@ public class DepartmentFragment extends BaseFragment {
     private List<ListBean> beanList;
     private DepartmentAdapter adapter;
 
-    private View oldView;
+    private int currPosition = 0;
+    private DepartmentChildFragment fragment;
+    private DepartmentChildFragment[] fragments;
 
     @Override
     protected int bindLayout() {
         dataBean = getArguments().getParcelable("bean");
         beanList = dataBean.getList();
+        fragments = new DepartmentChildFragment[beanList.size()];
         return R.layout.fragment_department;
     }
 
@@ -54,20 +58,40 @@ public class DepartmentFragment extends BaseFragment {
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                for (int i = 0; i < beanList.size(); i++) {
-                    if (beanList.get(i).isSelect()) {
-                        beanList.get(i).setSelect(false);
-                    }
-                    if (!beanList.get(i).isSelect() && i == position) {
-                        beanList.get(i).setSelect(true);
-                    }
+                if (currPosition != position) {
+                    //切换fragment
+                    changeFragment(position);
+                    currPosition = position;
                 }
                 indicatorView.openAnimator(view);
-                adapter.notifyDataSetChanged();
             }
         });
+
+        //默认加载第一个fragment
+        fragment = DepartmentChildFragment.getInstance(beanList.get(0));
+        changeFragment(currPosition);
     }
 
+    /**
+     * 加载fragment
+     *
+     * @param position
+     */
+    private void changeFragment(int position) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        if (fragments[currPosition] != null) {
+            transaction.hide(fragments[currPosition]);
+        }
+        fragment = fragments[position];
+        if (fragment == null) {
+            fragment = DepartmentChildFragment.getInstance(beanList.get(position));
+            fragments[position] = fragment;
+            transaction.add(R.id.fragmentContainer, fragment);
+        } else {
+            transaction.show(fragment);
+        }
+        transaction.commitAllowingStateLoss();
+    }
 
     public static DepartmentFragment getInstance(DataBean bean) {
         DepartmentFragment fragment = new DepartmentFragment();
