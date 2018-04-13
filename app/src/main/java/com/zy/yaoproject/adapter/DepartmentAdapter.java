@@ -19,5 +19,6 @@ public class DepartmentAdapter extends BaseQuickAdapter<ListBean, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, ListBean item) {
         helper.setText(R.id.tabText, item.getName());
+//        helper.setVisible(R.id.tabView,item.isSelect());
     }
 }

@@ -3,7 +3,6 @@ package com.zy.yaoproject.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +20,11 @@ public class ListBean implements Parcelable {
 
     private String id;
     private String name;
+    private boolean isSelect;
     private List<NeeadBean> neeadBean;
+
+    public ListBean() {
+    }
 
     public String getId() {
         return id;
@@ -37,6 +40,14 @@ public class ListBean implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 
     public List<NeeadBean> getNeeadBean() {
@@ -56,20 +67,18 @@ public class ListBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeList(this.neeadBean);
-    }
-
-    public ListBean() {
+        dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.neeadBean);
     }
 
     protected ListBean(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
-        this.neeadBean = new ArrayList<NeeadBean>();
-        in.readList(this.neeadBean, NeeadBean.class.getClassLoader());
+        this.isSelect = in.readByte() != 0;
+        this.neeadBean = in.createTypedArrayList(NeeadBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+    public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
         @Override
         public ListBean createFromParcel(Parcel source) {
             return new ListBean(source);

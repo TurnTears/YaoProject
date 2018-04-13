@@ -1,8 +1,10 @@
 package com.zy.yaoproject.ui;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -25,6 +27,8 @@ import butterknife.BindView;
 
 public class DepartmentFragment extends BaseFragment {
 
+    @BindView(R.id.tabView)
+    View tabView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.fragmentContainer)
@@ -33,6 +37,8 @@ public class DepartmentFragment extends BaseFragment {
     private DataBean dataBean;
     private List<ListBean> beanList;
     private DepartmentAdapter adapter;
+
+    private View oldView;
 
     @Override
     protected int bindLayout() {
@@ -43,15 +49,63 @@ public class DepartmentFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        adapter=new DepartmentAdapter(R.layout.item_nav_class,beanList);
+        adapter = new DepartmentAdapter(R.layout.item_nav_class, beanList);
         recyclerView.setLayoutManager(new NsLinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                for (int i = 0; i < beanList.size(); i++) {
+                    if (beanList.get(i).isSelect()) {
+                        beanList.get(i).setSelect(false);
+                    }
+                    if (!beanList.get(i).isSelect() && i == position) {
+                        beanList.get(i).setSelect(true);
+                    }
+                }
+                openAnimator(view);
+                adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    /**
+     * 开启Indicator动画
+     *
+     * @param view
+     */
+    private void openAnimator(View view) {
+        if (view == null) {
+            return;
+        }
+        if (oldView == null) {
+            oldView = view;
+        }
+        if (tabView.getVisibility() != View.VISIBLE) {
+            tabView.setVisibility(View.VISIBLE);
+        }
+        float oldY = calculateViewCenter(oldView);
+        float newY = calculateViewCenter(view);
+
+        ObjectAnimator animator = ObjectAnimator.ofFloat(tabView, "TranslationY", oldY, newY);
+        animator.setDuration(500);
+        animator.setInterpolator(new OvershootInterpolator());
+        animator.start();
+
+        oldView = view;
+    }
+
+    /**
+     * 计算位移距离
+     *
+     * @param view
+     * @return
+     */
+    private float calculateViewCenter(View view) {
+        int tabHeight = tabView.getHeight();
+        int viewHeight = view.getHeight();
+        int viewTop = view.getTop();
+        return 1f * (viewTop + viewHeight / 2 - tabHeight / 2);
     }
 
     public static DepartmentFragment getInstance(DataBean bean) {

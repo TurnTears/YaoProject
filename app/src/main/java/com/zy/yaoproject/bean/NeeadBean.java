@@ -11,12 +11,22 @@ import android.os.Parcelable;
 public class NeeadBean implements Parcelable {
 
     /**
+     * id   : 1
      * name : 检查手套
      * unit : 付
      */
 
+    private String id;
     private String name;
     private String unit;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -34,6 +44,9 @@ public class NeeadBean implements Parcelable {
         this.unit = unit;
     }
 
+    public NeeadBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -41,19 +54,18 @@ public class NeeadBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.unit);
     }
 
-    public NeeadBean() {
-    }
-
     protected NeeadBean(Parcel in) {
+        this.id = in.readString();
         this.name = in.readString();
         this.unit = in.readString();
     }
 
-    public static final Parcelable.Creator<NeeadBean> CREATOR = new Parcelable.Creator<NeeadBean>() {
+    public static final Creator<NeeadBean> CREATOR = new Creator<NeeadBean>() {
         @Override
         public NeeadBean createFromParcel(Parcel source) {
             return new NeeadBean(source);

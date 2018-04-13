@@ -36,6 +36,7 @@ public class DepartmentActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
     }
 
     @Override
