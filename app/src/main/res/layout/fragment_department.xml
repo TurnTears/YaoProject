@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <View
+    <com.zy.yaoproject.widget.IndicatorView
         android:id="@+id/tabView"
         android:layout_width="4dp"
         android:layout_height="15dp"

@@ -1,10 +1,8 @@
 package com.zy.yaoproject.ui;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,6 +13,7 @@ import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.DataBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
+import com.zy.yaoproject.widget.IndicatorView;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ import butterknife.BindView;
 public class DepartmentFragment extends BaseFragment {
 
     @BindView(R.id.tabView)
-    View tabView;
+    IndicatorView indicatorView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.fragmentContainer)
@@ -63,50 +62,12 @@ public class DepartmentFragment extends BaseFragment {
                         beanList.get(i).setSelect(true);
                     }
                 }
-                openAnimator(view);
+                indicatorView.openAnimator(view);
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
-    /**
-     * 开启Indicator动画
-     *
-     * @param view
-     */
-    private void openAnimator(View view) {
-        if (view == null) {
-            return;
-        }
-        if (oldView == null) {
-            oldView = view;
-        }
-        if (tabView.getVisibility() != View.VISIBLE) {
-            tabView.setVisibility(View.VISIBLE);
-        }
-        float oldY = calculateViewCenter(oldView);
-        float newY = calculateViewCenter(view);
-
-        ObjectAnimator animator = ObjectAnimator.ofFloat(tabView, "TranslationY", oldY, newY);
-        animator.setDuration(500);
-        animator.setInterpolator(new OvershootInterpolator());
-        animator.start();
-
-        oldView = view;
-    }
-
-    /**
-     * 计算位移距离
-     *
-     * @param view
-     * @return
-     */
-    private float calculateViewCenter(View view) {
-        int tabHeight = tabView.getHeight();
-        int viewHeight = view.getHeight();
-        int viewTop = view.getTop();
-        return 1f * (viewTop + viewHeight / 2 - tabHeight / 2);
-    }
 
     public static DepartmentFragment getInstance(DataBean bean) {
         DepartmentFragment fragment = new DepartmentFragment();
