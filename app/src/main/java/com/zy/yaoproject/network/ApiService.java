@@ -4,8 +4,11 @@ package com.zy.yaoproject.network;
 import com.zy.yaoproject.bean.AllDataBean;
 import com.zy.yaoproject.bean.LoginBean;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -44,5 +47,15 @@ public interface ApiService {
      */
     @GET("/zy/system/getData")
     Observable<AllDataBean> getSupply();
+
+
+    /**
+     * 添加物品
+     *
+     * @param map
+     * @return
+     */
+    @POST("/zy/system/addSystemData")
+    Observable<ResponseBody> addNeed(@Body() Map<String, Object> map);
 
 }

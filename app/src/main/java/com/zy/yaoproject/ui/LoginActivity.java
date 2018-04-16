@@ -61,10 +61,12 @@ public class LoginActivity extends BaseActivity {
         name = UserInfoUtils.getMob();
         if (!StringUtils.isEmpty(name)) {
             username.setText(name);
+            username.setSelection(username.getText().length());
         }
         psd = UserInfoUtils.getPsd();
         if (!StringUtils.isEmpty(name)) {
             password.setText(psd);
+            password.setSelection(password.getText().length());
         }
     }
 
@@ -100,7 +102,8 @@ public class LoginActivity extends BaseActivity {
                         UserInfoUtils.setePsd(psd);
                         switch (userEntity.getDepart_flag()) {
                             case "yisheng":
-                                startActivity(DepartmentActivity.class);
+//                                startActivity(DepartmentActivity.class);
+                                startActivity(LogisticsActivity.class);
                                 break;
                             case "houqin":
                                 startActivity(LogisticsActivity.class);
