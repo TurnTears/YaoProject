@@ -161,4 +161,5 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
         fragment.setArguments(bundle);
         return fragment;
     }
+
 }
