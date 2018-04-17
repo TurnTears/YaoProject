@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,4 +14,17 @@
         android:paddingLeft="7dp"
         android:paddingTop="7.5dp" />
 
-</LinearLayout>
+    <com.zy.yaoproject.widget.IconFont
+        android:id="@+id/btn_complete"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bg_float_button"
+        android:gravity="center"
+        android:text="@string/icon_chioce_duigou"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+</FrameLayout>

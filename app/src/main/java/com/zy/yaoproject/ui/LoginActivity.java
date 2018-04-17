@@ -102,8 +102,7 @@ public class LoginActivity extends BaseActivity {
                         UserInfoUtils.setePsd(psd);
                         switch (userEntity.getDepart_flag()) {
                             case "yisheng":
-//                                startActivity(DepartmentActivity.class);
-                                startActivity(LogisticsActivity.class);
+                                startActivity(DepartmentActivity.class);
                                 break;
                             case "houqin":
                                 startActivity(LogisticsActivity.class);

@@ -19,7 +19,7 @@
                 android:endColor="#31AFFE"
                 android:startColor="@color/colorPrimary"
                 android:type="linear" />
-            <corners android:radius="5dp"/>
+            <corners android:radius="4dp"/>
         </shape>
     </item>
 </selector>

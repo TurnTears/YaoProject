@@ -20,7 +20,7 @@ import com.zy.yaoproject.R;
  * 727784430@qq.com
  */
 
-public class NumberView extends ViewGroup implements View.OnClickListener {
+public class  NumberView extends ViewGroup implements View.OnClickListener {
 
     private CircleImageView btnAdd, btnSub;
     private TextView textNumber;

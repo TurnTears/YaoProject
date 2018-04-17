@@ -7,8 +7,8 @@ package com.zy.yaoproject.network;
 
 public class ApiContent {
 
-//    public static String API_URL="http://39.104.90.39:8080";
+    public static String API_URL="http://39.104.90.39:8080";
 
-    public static String API_URL="http://shagoulipeng001.tunnel.echomod.cn";
+//    public static String API_URL="http://shagoulipeng001.tunnel.echomod.cn";
 
 }
