@@ -41,7 +41,7 @@ public interface ApiService {
     Observable<ResponseBody> logout();
 
     /**
-     * 获取补给信息
+     * 获取所有物品信息
      *
      * @return
      */
@@ -49,7 +49,7 @@ public interface ApiService {
     Observable<AllDataBean> getSupply();
 
     /**
-     * 添加物品
+     * 添加物品种类
      *
      * @param map
      * @return
@@ -58,11 +58,19 @@ public interface ApiService {
     Observable<ResponseBody> addNeed(@Body() Map<String, Object> map);
 
     /**
-     * 提交需求
+     * 提交物品需求
      *
      * @param map
      * @return
      */
     @POST("/zy/common/addCommonData")
     Observable<ResponseBody> commitNeed(@Body() Map<String, Object> map);
+
+    /**
+     * 后勤获取配送物品数据
+     *
+     * @return
+     */
+    @POST("/zy/common/getCommonData")
+    Observable<ResponseBody> getCommonData();
 }

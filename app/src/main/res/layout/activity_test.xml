@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.zy.yaoproject.ui.TestActivity">
 
-    <EditText
-        android:id="@+id/edit"
+    <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
+        android:text="获取"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

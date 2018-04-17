@@ -1,19 +1,19 @@
 package com.zy.yaoproject.ui;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.EditText;
+import android.widget.Button;
 
-import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
+import com.zy.yaoproject.network.RxRetrofit;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class TestActivity extends BaseActivity {
 
-    @BindView(R.id.edit)
-    EditText edit;
+    @BindView(R.id.button)
+    Button button;
 
     @Override
     protected int bindLayout() {
@@ -22,16 +22,15 @@ public class TestActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        RxTextView.afterTextChangeEvents(edit).subscribe(textViewAfterTextChangeEvent -> {
-            Log.d("TestActivity", "afterTextChangeEvents");
-        });
-        RxTextView.textChanges(edit).subscribe(sequence -> {
-            Log.d("TestActivity", "textChanges");
-        });
-        RxTextView.textChangeEvents(edit).subscribe(textViewTextChangeEvent -> {
-            Log.d("TestActivity", "textChangeEvents");
-        });
 
     }
 
+    @OnClick(R.id.button)
+    public void onViewClicked() {
+        RxRetrofit
+                .getApi()
+                .getCommonData()
+                .compose(applySchedulers())
+                .subscribe();
+    }
 }
