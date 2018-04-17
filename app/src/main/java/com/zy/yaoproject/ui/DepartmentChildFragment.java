@@ -14,13 +14,18 @@ import com.zy.yaoproject.bean.BusNeedBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.bean.NeeadBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
+import com.zy.yaoproject.network.RxRetrofit;
+import com.zy.yaoproject.observer.BaseObserver;
 import com.zy.yaoproject.widget.IconFont;
 import com.zy.yaoproject.widget.dialogfragment.AddNeedFragment;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 
 /**
  * Created by muzi on 2018/4/12.
@@ -126,7 +131,27 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
      * 提交
      */
     private void commitNeed() {
-
+        Observable.just(beanHashMap)
+                .map(map -> map.entrySet())
+                .flatMapIterable(entries -> entries)
+                .map(integerBusNeedBeanEntry -> integerBusNeedBeanEntry.getValue())
+                .toList()
+                .map(busNeedBeans -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("map", busNeedBeans);
+                    return map;
+                })
+                .flatMapObservable(stringListMap ->
+                        RxRetrofit.getApi()
+                                .commitNeed(stringListMap)
+                                .compose(applySchedulers())
+                )
+                .subscribe(new BaseObserver<ResponseBody>(this) {
+                    @Override
+                    protected void onSuccess(ResponseBody responseBody) {
+                        super.onSuccess(responseBody);
+                    }
+                });
     }
 
     public static DepartmentChildFragment getInstance(ListBean bean) {

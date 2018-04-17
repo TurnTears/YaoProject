@@ -48,7 +48,6 @@ public interface ApiService {
     @GET("/zy/system/getData")
     Observable<AllDataBean> getSupply();
 
-
     /**
      * 添加物品
      *
@@ -58,4 +57,12 @@ public interface ApiService {
     @POST("/zy/system/addSystemData")
     Observable<ResponseBody> addNeed(@Body() Map<String, Object> map);
 
+    /**
+     * 提交需求
+     *
+     * @param map
+     * @return
+     */
+    @POST("/zy/common/addCommonData")
+    Observable<ResponseBody> commitNeed(@Body() Map<String, Object> map);
 }
