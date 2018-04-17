@@ -48,20 +48,28 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
             }
             return false;
         });
-        RxTextView.textChanges(editText).subscribe(sequence -> {
+
+        RxTextView.afterTextChangeEvents(editText).subscribe(textViewAfterTextChangeEvent -> {
             accepte();
         });
-
     }
 
     private void accepte() {
-        int inputNumber = Integer.parseInt(editText.getText().toString().trim());
-        if (inputNumber > number) {
-            number = inputNumber;
-            listener.onChange(true, number);
-        } else {
-            number = inputNumber;
-            listener.onChange(false, number);
+        try {
+            int inputNumber = Integer.parseInt(editText.getText().toString().trim());
+            if (inputNumber > number) {
+                number = inputNumber;
+                if (listener != null) {
+                    listener.onChange(true, number);
+                }
+            } else {
+                number = inputNumber;
+                if (listener != null) {
+                    listener.onChange(false, number);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -76,23 +84,17 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
                     editText.setVisibility(VISIBLE);
                 }
                 editText.setText(String.valueOf(number));
-                if (listener != null) {
-                    listener.onChange(true, number);
-                }
                 break;
             case R.id.btn_sub:
                 if (number > 1) {
                     number--;
-                    editText.setText(String.valueOf(number));
                 } else {
                     number = 0;
                     isShowing = false;
                     btnSub.setVisibility(INVISIBLE);
                     editText.setVisibility(INVISIBLE);
                 }
-                if (listener != null) {
-                    listener.onChange(false, number);
-                }
+                editText.setText(String.valueOf(number));
                 break;
         }
     }
@@ -102,10 +104,6 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
     }
 
     private OnChangeListener listener;
-
-    public OnChangeListener getListener() {
-        return listener;
-    }
 
     public void setListener(OnChangeListener listener) {
         this.listener = listener;

@@ -5,15 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.adapter.DepartmentChildAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
+import com.zy.yaoproject.bean.BusNeedBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.bean.NeeadBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
 import com.zy.yaoproject.widget.IconFont;
 import com.zy.yaoproject.widget.dialogfragment.AddNeedFragment;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,12 +41,15 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
 
     private ListBean listBean;
     private List<NeeadBean> neeadBean;
-    private DepartmentChildAdapter adapter;
+    private DepartmentChildAdapter childAdapter;
 
     /**
      * 增加弹窗
      */
     private AddNeedFragment addNeedFragment;
+
+    private BusNeedBean busNeedBean;
+    private HashMap<Integer, BusNeedBean> beanHashMap = new HashMap<>();
 
     @Override
     protected int bindLayout() {
@@ -54,13 +61,22 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
     @Override
     protected void initView(View view) {
         btnComplete.setOnClickListener(this);
-        adapter = new DepartmentChildAdapter(R.layout.item_need, neeadBean);
+        childAdapter = new DepartmentChildAdapter(R.layout.item_need, neeadBean);
         View footView = inflaterView(R.layout.foot_item_need);
         btnAdd = footView.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(this);
-        adapter.addFooterView(footView);
+        childAdapter.addFooterView(footView);
         recyclerView.setLayoutManager(new NsLinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(childAdapter);
+
+        recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.numberView) {
+                    recordData(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -73,6 +89,27 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
                 addNeed();
                 break;
         }
+    }
+
+    /**
+     * 记录数据
+     *
+     * @param position
+     */
+    private void recordData(int position) {
+        childAdapter.setListener((isAdd, number) -> {
+            busNeedBean = beanHashMap.get(position);
+            if (busNeedBean == null) {
+                busNeedBean = new BusNeedBean(String.valueOf(number), neeadBean.get(position).getId());
+                beanHashMap.put(position, busNeedBean);
+            } else {
+                if (number == 0) {
+                    beanHashMap.remove(position);
+                } else {
+                    busNeedBean.setFundNum(String.valueOf(number));
+                }
+            }
+        });
     }
 
     /**
