@@ -5,6 +5,7 @@ import android.widget.Button;
 
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.activity.BaseActivity;
+import com.zy.yaoproject.network.RxRetrofit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,6 +31,11 @@ public class LogisticsActivity extends BaseActivity {
 
     @OnClick(R.id.button)
     public void onViewClicked() {
+        RxRetrofit
+                .getApi()
+                .getCommonData()
+                .compose(applySchedulers())
+                .subscribe();
     }
 
 }
