@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -16,7 +17,6 @@ import com.zy.yaoproject.bean.NeeadBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
 import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.BaseObserver;
-import com.zy.yaoproject.widget.IconFont;
 import com.zy.yaoproject.widget.dialogfragment.AddNeedFragment;
 
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.btn_complete)
-    IconFont btnComplete;
+    TextView btnComplete;
 
     /**
      * 添加

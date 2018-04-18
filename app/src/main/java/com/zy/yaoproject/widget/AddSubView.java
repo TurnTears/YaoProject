@@ -69,7 +69,6 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
