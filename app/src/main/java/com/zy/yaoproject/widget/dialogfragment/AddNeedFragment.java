@@ -18,9 +18,7 @@ import com.zy.yaoproject.observer.BaseObserver;
 import com.zy.yaoproject.utils.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,10 +104,8 @@ public class AddNeedFragment extends BaseDialogFragment {
         fund.setUnit(editUnit.getText().toString().trim());
         fund.setTypeId(typeId);
         busTypeFunds.add(fund);
-        Map<String, Object> map = new HashMap<>();
-        map.put("map", busTypeFunds);
         RxRetrofit.getApi()
-                .addNeed(map)
+                .addNeed(busTypeFunds)
                 .compose(applySchedulers())
                 .subscribe(new BaseObserver<ResponseBody>(this) {
                     @Override

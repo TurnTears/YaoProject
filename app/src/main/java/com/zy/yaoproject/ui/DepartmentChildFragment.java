@@ -21,7 +21,6 @@ import com.zy.yaoproject.widget.dialogfragment.AddNeedFragment;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -136,14 +135,9 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
                 .flatMapIterable(entries -> entries)
                 .map(integerBusNeedBeanEntry -> integerBusNeedBeanEntry.getValue())
                 .toList()
-                .map(busNeedBeans -> {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("map", busNeedBeans);
-                    return map;
-                })
-                .flatMapObservable(stringListMap ->
+                .flatMapObservable(busNeedBeans ->
                         RxRetrofit.getApi()
-                                .commitNeed(stringListMap)
+                                .commitNeed(busNeedBeans)
                                 .compose(applySchedulers())
                 )
                 .subscribe(new BaseObserver<ResponseBody>(this) {

@@ -2,9 +2,11 @@ package com.zy.yaoproject.network;
 
 
 import com.zy.yaoproject.bean.AllDataBean;
+import com.zy.yaoproject.bean.BusNeedBean;
+import com.zy.yaoproject.bean.BusTypeFund;
 import com.zy.yaoproject.bean.LoginBean;
 
-import java.util.Map;
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -51,20 +53,21 @@ public interface ApiService {
     /**
      * 添加物品种类
      *
-     * @param map
+     * @param list
      * @return
      */
     @POST("/zy/system/addSystemData")
-    Observable<ResponseBody> addNeed(@Body() Map<String, Object> map);
+    Observable<ResponseBody> addNeed(@Body() List<BusTypeFund> list);
 
     /**
      * 提交物品需求
      *
-     * @param map
+     * @param list
      * @return
      */
     @POST("/zy/common/addCommonData")
-    Observable<ResponseBody> commitNeed(@Body() Map<String, Object> map);
+    Observable<ResponseBody> commitNeed(@Body() List<BusNeedBean> list);
+
 
     /**
      * 后勤获取配送物品数据
