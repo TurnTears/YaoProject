@@ -1,6 +1,7 @@
 package com.zy.yaoproject.network;
 
 
+import com.zy.yaoproject.bean.AddCallBackBean;
 import com.zy.yaoproject.bean.AllDataBean;
 import com.zy.yaoproject.bean.BusNeedBean;
 import com.zy.yaoproject.bean.BusTypeFund;
@@ -58,7 +59,7 @@ public interface ApiService {
      * @return
      */
     @POST("/zy/system/addSystemData")
-    Observable<ResponseBody> addNeed(@Body() List<BusTypeFund> list);
+    Observable<AddCallBackBean> addNeed(@Body() List<BusTypeFund> list);
 
     /**
      * 提交物品需求

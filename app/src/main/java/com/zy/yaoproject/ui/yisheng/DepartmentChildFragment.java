@@ -44,7 +44,7 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
     private Button btnAdd;
 
     private ListBean listBean;
-    private List<NeeadBean> neeadBean;
+    private List<NeeadBean> beanList;
     private DepartmentChildAdapter childAdapter;
 
     /**
@@ -58,14 +58,14 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
     @Override
     protected int bindLayout() {
         listBean = getArguments().getParcelable("bean");
-        neeadBean = listBean.getNeeadBean();
+        beanList = listBean.getNeeadBean();
         return R.layout.fragment_department_child;
     }
 
     @Override
     protected void initView(View view) {
         btnComplete.setOnClickListener(this);
-        childAdapter = new DepartmentChildAdapter(R.layout.item_need, neeadBean);
+        childAdapter = new DepartmentChildAdapter(R.layout.item_need, beanList);
         View footView = inflaterView(R.layout.foot_item_need);
         btnAdd = footView.findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(this);
@@ -104,7 +104,7 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
         childAdapter.setListener((isAdd, number) -> {
             busNeedBean = beanHashMap.get(position);
             if (busNeedBean == null) {
-                busNeedBean = new BusNeedBean(String.valueOf(number), neeadBean.get(position).getId());
+                busNeedBean = new BusNeedBean(String.valueOf(number), beanList.get(position).getId());
                 beanHashMap.put(position, busNeedBean);
             } else {
                 if (number == 0) {
@@ -122,6 +122,10 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
     private void addNeed() {
         if (addNeedFragment == null) {
             addNeedFragment = AddNeedFragment.getInstance(listBean.getId());
+            addNeedFragment.setAddCallBack(neeadBean -> {
+                beanList.add(neeadBean);
+                childAdapter.notifyDataSetChanged();
+            });
         }
         addNeedFragment.show(getChildFragmentManager(), "addNeedFragment");
     }

@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.dialogfragment.BaseDialogFragment;
+import com.zy.yaoproject.bean.AddCallBackBean;
+import com.zy.yaoproject.bean.BaseBean;
 import com.zy.yaoproject.bean.BusTypeFund;
+import com.zy.yaoproject.bean.NeeadBean;
 import com.zy.yaoproject.network.RxRetrofit;
-import com.zy.yaoproject.observer.BaseObserver;
+import com.zy.yaoproject.observer.EntityObserver;
 import com.zy.yaoproject.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -25,7 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import okhttp3.ResponseBody;
 
 /**
  * Created by muzi on 2018/4/17.
@@ -48,7 +50,10 @@ public class AddNeedFragment extends BaseDialogFragment {
     @BindView(R.id.btn_complete)
     Button btnComplete;
 
+    private String name;
+    private String unit;
     private String typeId;
+    private NeeadBean neeadBean;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,8 +91,10 @@ public class AddNeedFragment extends BaseDialogFragment {
                 dismissDialog();
                 break;
             case R.id.btn_complete:
-                if (StringUtils.isEmpty(editName.getText().toString().trim()) ||
-                        StringUtils.isEmpty(editUnit.getText().toString().trim())) {
+                name = editName.getText().toString().trim();
+                unit = editUnit.getText().toString().trim();
+                if (StringUtils.isEmpty(name) ||
+                        StringUtils.isEmpty(unit)) {
                     showToast("请补全信息！");
                     return;
                 }
@@ -102,18 +109,34 @@ public class AddNeedFragment extends BaseDialogFragment {
     private void addNeed() {
         List<BusTypeFund> busTypeFunds = new ArrayList<>();
         BusTypeFund fund = new BusTypeFund();
-        fund.setName(editName.getText().toString().trim());
-        fund.setUnit(editUnit.getText().toString().trim());
+        fund.setName(name);
+        fund.setUnit(unit);
         fund.setTypeId(typeId);
         busTypeFunds.add(fund);
         RxRetrofit.getApi()
                 .addNeed(busTypeFunds)
                 .compose(applySchedulers())
-                .subscribe(new BaseObserver<ResponseBody>(this) {
+                .subscribe(new EntityObserver<AddCallBackBean>(this) {
                     @Override
-                    protected void onSuccess(ResponseBody responseBody) {
-                        super.onSuccess(responseBody);
+                    protected void onSuccess(AddCallBackBean addCallBackBean) {
+                        super.onSuccess(addCallBackBean);
+                        String ids = addCallBackBean.getIds().get(0);
+                        neeadBean = new NeeadBean();
+                        neeadBean.setId(ids);
+                        neeadBean.setName(name);
+                        neeadBean.setUnit(unit);
+                        if (addCallBack != null) {
+                            addCallBack.onSuccess(neeadBean);
+                        }
                         dismissDialog();
+                    }
+
+                    @Override
+                    protected void onError(BaseBean t) {
+                        super.onError(t);
+                        if (StringUtils.isEmpty(t.getMsg())) {
+                            showToast("添加失败请重试");
+                        }
                     }
                 });
     }
@@ -122,5 +145,15 @@ public class AddNeedFragment extends BaseDialogFragment {
         editUnit.setText(null);
         editName.setText(null);
         dismissAllowingStateLoss();
+    }
+
+    private AddCallBack addCallBack;
+
+    public void setAddCallBack(AddCallBack addCallBack) {
+        this.addCallBack = addCallBack;
+    }
+
+    public interface AddCallBack {
+        void onSuccess(NeeadBean neeadBean);
     }
 }
