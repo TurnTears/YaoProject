@@ -23,8 +23,8 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_float_button"
         android:gravity="center"
-        android:text="√"
+        android:text="提交"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
 </FrameLayout>

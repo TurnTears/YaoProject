@@ -8,13 +8,15 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.zy.yaoproject.R;
-import com.zy.yaoproject.adapter.DepartmentAdapter;
+import com.zy.yaoproject.adapter.LogisticsAdapter;
 import com.zy.yaoproject.base.activity.BaseActivity;
-import com.zy.yaoproject.bean.DataBean;
-import com.zy.yaoproject.bean.ListBean;
+import com.zy.yaoproject.bean.LogisticsBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
+import com.zy.yaoproject.network.RxRetrofit;
+import com.zy.yaoproject.observer.EntityObserver;
 import com.zy.yaoproject.widget.IndicatorView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,9 +31,8 @@ public class LogisticsActivity extends BaseActivity {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private DataBean dataBean;
-    private List<ListBean> beanList;
-    private DepartmentAdapter adapter;
+    private LogisticsAdapter adapter;
+    private List<LogisticsBean.DataBeanX> beanList = new ArrayList<>();
 
     private int currPosition = 0;
     private LogisticsFragment fragment;
@@ -39,13 +40,12 @@ public class LogisticsActivity extends BaseActivity {
 
     @Override
     protected int bindLayout() {
-        fragments = new LogisticsFragment[5];
         return R.layout.activity_logistics;
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        adapter = new DepartmentAdapter(R.layout.item_nav_class, beanList);
+        adapter = new LogisticsAdapter(R.layout.item_nav_class, beanList);
         recyclerView.setLayoutManager(new NsLinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
@@ -59,10 +59,27 @@ public class LogisticsActivity extends BaseActivity {
                 indicatorView.openAnimator(view);
             }
         });
+    }
 
-        //默认加载第一个fragment
-        fragment = LogisticsFragment.getInstance(beanList.get(0));
-        changeFragment(currPosition);
+    @Override
+    protected void requestData() {
+        super.requestData();
+        RxRetrofit
+                .getApi()
+                .getCommonData()
+                .compose(applySchedulers())
+                .subscribe(new EntityObserver<LogisticsBean>(this) {
+                    @Override
+                    protected void onSuccess(LogisticsBean logisticsBean) {
+                        super.onSuccess(logisticsBean);
+                        beanList.clear();
+                        beanList.addAll(logisticsBean.getData());
+
+                        fragments = new LogisticsFragment[beanList.size()];
+                        changeFragment(currPosition);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     /**

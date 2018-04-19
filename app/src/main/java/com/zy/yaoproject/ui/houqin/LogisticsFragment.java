@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.base.fragment.BaseFragment;
-import com.zy.yaoproject.bean.ListBean;
+import com.zy.yaoproject.bean.LogisticsBean;
 
 
 public class LogisticsFragment extends BaseFragment {
@@ -20,7 +20,7 @@ public class LogisticsFragment extends BaseFragment {
 
     }
 
-    public static LogisticsFragment getInstance(ListBean bean) {
+    public static LogisticsFragment getInstance(LogisticsBean.DataBeanX bean) {
         LogisticsFragment fragment = new LogisticsFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("bean", bean);
