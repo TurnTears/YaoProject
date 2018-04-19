@@ -33,7 +33,7 @@ public class LogisticsFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        adapter = new LogisticsChildAdapter(R.layout.item_logistics, beanList);
+        adapter = new LogisticsChildAdapter(getContext(),R.layout.item_logistics, beanList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
     }

@@ -1,7 +1,8 @@
 package com.zy.yaoproject.adapter;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,8 +19,11 @@ import java.util.List;
  */
 public class LogisticsChildAdapter extends BaseQuickAdapter<LogisticsBean.DataBeanX.DataBean, BaseViewHolder> {
 
-    public LogisticsChildAdapter(int layoutResId, @Nullable List<LogisticsBean.DataBeanX.DataBean> data) {
+    private Context context;
+
+    public LogisticsChildAdapter(Context context,int layoutResId, @Nullable List<LogisticsBean.DataBeanX.DataBean> data) {
         super(layoutResId, data);
+        this.context=context;
     }
 
     @Override
@@ -31,11 +35,11 @@ public class LogisticsChildAdapter extends BaseQuickAdapter<LogisticsBean.DataBe
         switch (item.getDistributionFlag()) {
             case "0":
                 helper.setText(R.id.text_state, "待配送");
-                view.setColor(Color.BLUE);
+                view.setColor(ContextCompat.getColor(context,R.color.themeBlue));
                 break;
             case "1":
                 helper.setText(R.id.text_state, "已配送");
-                view.setColor(Color.GREEN);
+                view.setColor(ContextCompat.getColor(context,R.color.themeGreen));
                 break;
         }
 

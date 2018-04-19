@@ -2,12 +2,14 @@ package com.zy.yaoproject.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.zy.yaoproject.R;
 
 /**
  * Created by muzi on 2018/4/19.
@@ -30,7 +32,7 @@ public class TagView extends View {
     private void init() {
         path = new Path();
         paint = new Paint();
-        paint.setColor(Color.BLUE);
+        paint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
 
