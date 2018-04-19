@@ -34,7 +34,7 @@ public abstract class ResponseObserver<T> extends BaseObserver<Response<T>> {
         super.onNext(tResponse);
         onSuccess(tResponse);
         t = tResponse.body();
-        date = tResponse.headers().getDate("Date");
+        date = tResponse.headers().getDate("DateUtils");
         onNext(t, date);
     }
 
