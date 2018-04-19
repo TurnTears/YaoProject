@@ -1,12 +1,8 @@
 <resources>
-    <string name="app_name">淘药网</string>
+    <string name="app_name">配送</string>
     <string name="icon_chioce_duigou">&#xe643;</string>
     <!--导航返回-->
     <string name="icon_back">&#xe616;</string>
     <!--搜索-->
     <string name="icon_search">&#xe617;</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

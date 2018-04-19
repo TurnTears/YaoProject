@@ -27,7 +27,7 @@ public class WelcomeActivity extends BaseActivity {
         TypeFaceTask typeFaceTask = new TypeFaceTask(this);
         typeFaceTask.execute();
         typeFaceTask.setComplete(() ->
-                Observable.timer(500, TimeUnit.MILLISECONDS)
+                Observable.timer(2000, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(aLong -> {
                             startActivity(LoginActivity.class);
