@@ -5,6 +5,7 @@ import com.zy.yaoproject.bean.AllDataBean;
 import com.zy.yaoproject.bean.BusNeedBean;
 import com.zy.yaoproject.bean.BusTypeFund;
 import com.zy.yaoproject.bean.LoginBean;
+import com.zy.yaoproject.bean.LogisticsBean;
 
 import java.util.List;
 
@@ -75,5 +76,5 @@ public interface ApiService {
      * @return
      */
     @POST("/zy/common/getCommonData")
-    Observable<ResponseBody> getCommonData();
+    Observable<LogisticsBean> getCommonData();
 }

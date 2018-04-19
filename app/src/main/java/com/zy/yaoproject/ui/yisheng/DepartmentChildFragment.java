@@ -1,4 +1,4 @@
-package com.zy.yaoproject.ui;
+package com.zy.yaoproject.ui.yisheng;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;

@@ -5,6 +5,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -17,14 +18,13 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
-import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Created by muzi on 2018/1/12.
  * 727784430@qq.com
  */
 
-public abstract class RxActivity extends SupportActivity implements LifecycleProvider<ActivityEvent> {
+public abstract class RxActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 

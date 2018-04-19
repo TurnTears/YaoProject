@@ -10,6 +10,8 @@ import com.zy.yaoproject.base.activity.BaseActivity;
 import com.zy.yaoproject.bean.LoginBean;
 import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.EntityObserver;
+import com.zy.yaoproject.ui.houqin.LogisticsActivity;
+import com.zy.yaoproject.ui.yisheng.DepartmentActivity;
 import com.zy.yaoproject.utils.StringUtils;
 import com.zy.yaoproject.utils.UserInfoUtils;
 

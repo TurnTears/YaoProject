@@ -29,8 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.LoginActivity" />
-        <activity android:name=".ui.DepartmentActivity" />
-        <activity android:name=".ui.LogisticsActivity" />
+        <activity android:name=".ui.yisheng.DepartmentActivity" />
+        <activity android:name=".ui.houqin.LogisticsActivity" />
         <activity android:name=".ui.TestActivity" />
     </application>
 
