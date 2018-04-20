@@ -74,10 +74,12 @@ public class LogisticsActivity extends BaseActivity {
                         super.onSuccess(logisticsBean);
                         beanList.clear();
                         beanList.addAll(logisticsBean.getData());
+                        if (beanList.size() > 0) {
+                            fragments = new LogisticsFragment[beanList.size()];
+                            changeFragment(currPosition);
+                            adapter.notifyDataSetChanged();
+                        }
 
-                        fragments = new LogisticsFragment[beanList.size()];
-                        changeFragment(currPosition);
-                        adapter.notifyDataSetChanged();
                     }
                 });
     }

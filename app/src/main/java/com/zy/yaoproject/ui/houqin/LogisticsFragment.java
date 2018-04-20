@@ -1,12 +1,11 @@
 package com.zy.yaoproject.ui.houqin;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.loopeer.cardstack.CardStackView;
 import com.zy.yaoproject.R;
-import com.zy.yaoproject.adapter.LogisticsChildAdapter;
+import com.zy.yaoproject.adapter.CardStackAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.LogisticsBean;
 
@@ -17,10 +16,10 @@ import butterknife.BindView;
 
 public class LogisticsFragment extends BaseFragment {
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.stackview)
+    CardStackView cardStackView;
 
-    private LogisticsChildAdapter adapter;
+    private CardStackAdapter stackAdapter;
     private LogisticsBean.DataBeanX bean;
     private List<LogisticsBean.DataBeanX.DataBean> beanList;
 
@@ -33,11 +32,21 @@ public class LogisticsFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        adapter = new LogisticsChildAdapter(getContext(),R.layout.item_logistics, beanList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-    }
+        stackAdapter = new CardStackAdapter(getContext(), new CardStackAdapter.OnClick() {
+            @Override
+            public void onDelete(int position) {
+                showToast("onDelete:" + position);
+            }
 
+            @Override
+            public void onDelivery(int position) {
+                showToast("onDelivery:" + position);
+            }
+        });
+        cardStackView.setAdapter(stackAdapter);
+        stackAdapter.updateData(beanList);
+        cardStackView.setItemExpendListener(expend -> {});
+    }
 
     public static LogisticsFragment getInstance(LogisticsBean.DataBeanX bean) {
         LogisticsFragment fragment = new LogisticsFragment();

@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.houqin.LogisticsFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <com.loopeer.cardstack.CardStackView
+        android:id="@+id/stackview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="7.5dp" />
+        android:clipToPadding="false"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"/>
 
 </FrameLayout>

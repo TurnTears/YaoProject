@@ -1,33 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_list_card_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="8dp">
+    android:orientation="vertical"
+    app:stackHeaderHeight="130dp">
 
     <RelativeLayout
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.zy.yaoproject.widget.TagView
-            android:id="@+id/tagView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp" />
+        android:layout_height="wrap_content"
+        tools:background="@drawable/shape_rectangle_with_radius_0">
 
         <TextView
             android:id="@+id/text_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/defaultTextColor"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:textSize="15sp"
             tools:text="2018/4/19 18:00" />
 
@@ -37,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/defaultTextColor"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:textSize="15sp"
             tools:text="未配送" />
 
@@ -47,10 +39,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_time"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:textColor="@color/defaultTextColor"
+            android:textColor="@color/white"
             android:textSize="15sp"
             tools:text="一次性口罩" />
 
@@ -62,10 +54,47 @@
             android:layout_below="@id/text_time"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:textColor="@color/defaultTextColor"
+            android:textColor="@color/white"
             android:textSize="15sp"
             tools:text="5包" />
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+    <LinearLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:animateLayoutChanges="true"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg_delete"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg_delivery"
+            android:text="配送"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
