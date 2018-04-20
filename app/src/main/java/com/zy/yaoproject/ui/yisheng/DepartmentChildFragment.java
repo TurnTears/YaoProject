@@ -12,19 +12,20 @@ import com.zy.yaoproject.R;
 import com.zy.yaoproject.adapter.DepartmentChildAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.BusNeedBean;
+import com.zy.yaoproject.bean.CommitCallBackBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.bean.NeeadBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
 import com.zy.yaoproject.network.RxRetrofit;
-import com.zy.yaoproject.observer.BaseObserver;
+import com.zy.yaoproject.observer.EntityObserver;
 import com.zy.yaoproject.widget.dialogfragment.AddNeedFragment;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 
 /**
  * Created by muzi on 2018/4/12.
@@ -104,11 +105,14 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
         childAdapter.setListener((isAdd, number) -> {
             busNeedBean = beanHashMap.get(position);
             if (busNeedBean == null) {
-                busNeedBean = new BusNeedBean(String.valueOf(number), beanList.get(position).getId());
+                NeeadBean neeadBean = beanList.get(position);
+                neeadBean.setSelect(true);
+                busNeedBean = new BusNeedBean(String.valueOf(number), neeadBean.getId());
                 beanHashMap.put(position, busNeedBean);
             } else {
                 if (number == 0) {
                     beanHashMap.remove(position);
+                    beanList.get(position).setSelect(false);
                 } else {
                     busNeedBean.setFundNum(String.valueOf(number));
                 }
@@ -144,12 +148,27 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
                                 .commitNeed(busNeedBeans)
                                 .compose(applySchedulers())
                 )
-                .subscribe(new BaseObserver<ResponseBody>(this) {
+                .subscribe(new EntityObserver<CommitCallBackBean>(this) {
                     @Override
-                    protected void onSuccess(ResponseBody responseBody) {
-                        super.onSuccess(responseBody);
+                    protected void onSuccess(CommitCallBackBean bean) {
+                        super.onSuccess(bean);
+                        showToast(bean.getMsg());
+                        reset();
                     }
                 });
+    }
+
+    /**
+     * 恢复未选择状态
+     */
+    private void reset() {
+        Set<Integer> integers = beanHashMap.keySet();
+        if (integers.size() != 0) {
+            for (Integer integer : integers) {
+                beanList.get(integer).setSelect(false);
+            }
+            childAdapter.notifyDataSetChanged();
+        }
     }
 
     public static DepartmentChildFragment getInstance(ListBean bean) {

@@ -19,6 +19,7 @@ public class NeeadBean implements Parcelable {
     private String id;
     private String name;
     private String unit;
+    private boolean isSelect;
 
     public String getId() {
         return id;
@@ -44,6 +45,14 @@ public class NeeadBean implements Parcelable {
         this.unit = unit;
     }
 
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
     public NeeadBean() {
     }
 
@@ -57,12 +66,14 @@ public class NeeadBean implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.unit);
+        dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
     }
 
     protected NeeadBean(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
         this.unit = in.readString();
+        this.isSelect = in.readByte() != 0;
     }
 
     public static final Creator<NeeadBean> CREATOR = new Creator<NeeadBean>() {

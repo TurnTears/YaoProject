@@ -72,12 +72,24 @@ public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBeanX.DataB
 
             switch (item.getDistributionFlag()) {
                 case "0":
+                    //更改配送状态
                     textState.setText("待配送");
                     containerCard.setBackgroundResource(R.drawable.shape_rectangle_with_radius_0);
+
+                    //更改配送按钮状态
+                    btnDelivery.setText("配送");
+                    btnDelivery.setEnabled(true);
+                    btnDelivery.setBackgroundResource(R.drawable.btn_bg_delivery);
                     break;
                 case "1":
+                    //更改配送状态
                     textState.setText("已配送");
                     containerCard.setBackgroundResource(R.drawable.shape_rectangle_with_radius_1);
+
+                    //更改配送按钮状态
+                    btnDelivery.setText("已配送");
+                    btnDelivery.setEnabled(false);
+                    btnDelivery.setBackgroundResource(R.drawable.btn_bg_complete);
                     break;
             }
             LogisticsBean.DataBeanX.DataBean.TypeNameBean typeName = item.getTypeName();

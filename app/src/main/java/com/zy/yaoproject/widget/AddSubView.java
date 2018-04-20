@@ -54,6 +54,12 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
         });
     }
 
+    public void reset() {
+        number = 0;
+        btnSub.setVisibility(INVISIBLE);
+        editText.setVisibility(INVISIBLE);
+    }
+
     private void accepte() {
         try {
             int inputNumber = Integer.parseInt(editText.getText().toString().trim());

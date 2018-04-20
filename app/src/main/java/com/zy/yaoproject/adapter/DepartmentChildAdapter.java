@@ -28,6 +28,9 @@ public class DepartmentChildAdapter extends BaseQuickAdapter<NeeadBean, BaseView
                 listener.onChange(isAdd, number);
             }
         });
+        if (!item.isSelect()) {
+            addSubView.reset();
+        }
     }
 
     private AddSubView.OnChangeListener listener;

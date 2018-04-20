@@ -5,6 +5,9 @@ import com.zy.yaoproject.bean.AddCallBackBean;
 import com.zy.yaoproject.bean.AllDataBean;
 import com.zy.yaoproject.bean.BusNeedBean;
 import com.zy.yaoproject.bean.BusTypeFund;
+import com.zy.yaoproject.bean.ChangeBean;
+import com.zy.yaoproject.bean.ChangeCallBackBean;
+import com.zy.yaoproject.bean.CommitCallBackBean;
 import com.zy.yaoproject.bean.LoginBean;
 import com.zy.yaoproject.bean.LogisticsBean;
 
@@ -68,7 +71,7 @@ public interface ApiService {
      * @return
      */
     @POST("/zy/common/addCommonData")
-    Observable<ResponseBody> commitNeed(@Body() List<BusNeedBean> list);
+    Observable<CommitCallBackBean> commitNeed(@Body() List<BusNeedBean> list);
 
 
     /**
@@ -78,4 +81,24 @@ public interface ApiService {
      */
     @POST("/zy/common/getCommonData")
     Observable<LogisticsBean> getCommonData();
+
+    /**
+     * 后勤修改配送状态
+     *
+     * @param list
+     * @return
+     */
+    @POST("/zy/common/updateCommonData")
+    Observable<ChangeCallBackBean> changeState(@Body() List<ChangeBean> list);
+
+
+    /**
+     * 后勤删除配送
+     *
+     * @param list
+     * @return
+     */
+    @POST("/zy/common/deleteCommonData")
+    Observable<ChangeCallBackBean> deleteState(@Body() List<ChangeBean> list);
+
 }
