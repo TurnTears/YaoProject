@@ -92,4 +92,7 @@ dependencies {
     //卡片动画
     implementation 'com.loopeer.library:cardstack:1.0.2'
 
+    //悬浮按钮
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
+
 }
