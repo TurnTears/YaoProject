@@ -56,6 +56,7 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
 
     public void reset() {
         number = 0;
+        isShowing = false;
         btnSub.setVisibility(INVISIBLE);
         editText.setVisibility(INVISIBLE);
     }
