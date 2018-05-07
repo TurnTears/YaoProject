@@ -16,7 +16,6 @@ import com.zy.yaoproject.bean.LogisticsBean;
 import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.EntityObserver;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,13 +75,12 @@ public class LogisticsFragment extends BaseFragment {
      * @param position
      */
     private void changeState(final int position) {
-        LogisticsBean.DataBeanX.DataBean dataBean = beanList.get(position);
-        String id = dataBean.getId();
-        List<ChangeBean> list = new ArrayList<>();
-        list.add(new ChangeBean(id));
-        RxRetrofit.getApi()
-                .changeState(list)
-                .compose(applySchedulers())
+        Observable.just(position)
+                .map(index -> beanList.get(position))
+                .map(dataBean -> new ChangeBean(dataBean.getId()))
+                .toList()
+                .flatMapObservable((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) list -> RxRetrofit.getApi()
+                        .changeState(list))
                 .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
                     @Override
                     protected void onSuccess(ChangeCallBackBean changeCallBackBean) {
@@ -90,7 +88,7 @@ public class LogisticsFragment extends BaseFragment {
                         showToast(changeCallBackBean.getMsg());
 
                         //更改配送状态
-                        dataBean.setDistributionFlag("1");
+                        beanList.get(position).setDistributionFlag("1");
                         stackAdapter.updateData(beanList);
                     }
                 });
@@ -130,12 +128,12 @@ public class LogisticsFragment extends BaseFragment {
      * @param position
      */
     private void deleteState(final int position) {
-        LogisticsBean.DataBeanX.DataBean dataBean = beanList.get(position);
-        String id = dataBean.getId();
-        List<ChangeBean> list = new ArrayList<>();
-        list.add(new ChangeBean(id));
-        RxRetrofit.getApi()
-                .deleteState(list)
+        Observable.just(position)
+                .map(index -> beanList.get(position))
+                .map(dataBean -> new ChangeBean(dataBean.getId()))
+                .toList()
+                .flatMapObservable((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) list -> RxRetrofit.getApi()
+                        .deleteState(list))
                 .compose(applySchedulers())
                 .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
                     @Override
@@ -143,7 +141,7 @@ public class LogisticsFragment extends BaseFragment {
                         super.onSuccess(changeCallBackBean);
                         showToast(changeCallBackBean.getMsg());
                         //删除配送
-                        beanList.remove(dataBean);
+                        beanList.remove(position);
                         stackAdapter.updateData(beanList);
                     }
                 });
