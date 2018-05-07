@@ -1,6 +1,7 @@
 package com.zy.yaoproject.ui.houqin;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -39,6 +40,9 @@ public class LogisticsFragment extends BaseFragment {
     private CardStackAdapter stackAdapter;
     private LogisticsBean.DataBeanX bean;
     private List<LogisticsBean.DataBeanX.DataBean> beanList;
+
+    private AlertDialog.Builder deleteBuilder;
+    private AlertDialog.Builder changeBuilder;
 
     @Override
     protected int bindLayout() {
@@ -180,12 +184,50 @@ public class LogisticsFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.action_delete:
-                deleteState();
+                showDeleteDialog();
                 break;
             case R.id.action_change:
-                changeState();
+                showChangeDialog();
                 break;
         }
         multipleActions.toggle();
+    }
+
+    /**
+     * 删除确认弹窗
+     */
+    private void showDeleteDialog() {
+        if (deleteBuilder == null) {
+            deleteBuilder = new AlertDialog.Builder(getContext());
+            deleteBuilder.setTitle("提示")
+                    .setMessage("确认全部删除吗？")
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        dialog.dismiss();
+                        deleteState();
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        dialog.dismiss();
+                    });
+        }
+        deleteBuilder.show();
+    }
+
+    /**
+     * 更改确认弹窗
+     */
+    private void showChangeDialog() {
+        if (changeBuilder == null) {
+            changeBuilder = new AlertDialog.Builder(getContext());
+            changeBuilder.setTitle("提示")
+                    .setMessage("确认全部配送吗？")
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        dialog.dismiss();
+                        changeState();
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        dialog.dismiss();
+                    });
+        }
+        changeBuilder.show();
     }
 }
