@@ -64,6 +64,16 @@ public interface ApiService {
     @POST("/zy/system/addSystemData")
     Observable<AddCallBackBean> addNeed(@Body() List<BusTypeFund> list);
 
+
+    /**
+     * 删除物品种类
+     *
+     * @param list
+     * @return
+     */
+    @POST("/zy/system/deleteSystemData")
+    Observable<ChangeCallBackBean> deleteNeed(@Body() List<ChangeBean> list);
+
     /**
      * 提交物品需求
      *

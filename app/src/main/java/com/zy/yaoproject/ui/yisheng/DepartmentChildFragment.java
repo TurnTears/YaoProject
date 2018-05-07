@@ -12,6 +12,8 @@ import com.zy.yaoproject.R;
 import com.zy.yaoproject.adapter.DepartmentChildAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.BusNeedBean;
+import com.zy.yaoproject.bean.ChangeBean;
+import com.zy.yaoproject.bean.ChangeCallBackBean;
 import com.zy.yaoproject.bean.CommitCallBackBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.bean.NeeadBean;
@@ -20,12 +22,14 @@ import com.zy.yaoproject.network.RxRetrofit;
 import com.zy.yaoproject.observer.EntityObserver;
 import com.zy.yaoproject.widget.dialogfragment.AddNeedFragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 /**
  * Created by muzi on 2018/4/12.
@@ -80,6 +84,12 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
                 if (view.getId() == R.id.numberView) {
                     recordData(position);
                 }
+            }
+
+            @Override
+            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                super.onItemLongClick(adapter, view, position);
+                deleteNeed(position);
             }
         });
     }
@@ -169,6 +179,34 @@ public class DepartmentChildFragment extends BaseFragment implements View.OnClic
             }
             childAdapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * 长按删除
+     */
+    private void deleteNeed(int position) {
+        Observable.just(position)
+                .map(index -> beanList.get(position).getId())
+                .map(id -> new ChangeBean(id))
+                .map(bean -> {
+                    List<ChangeBean> list = new ArrayList<>();
+                    list.add(bean);
+                    return list;
+                })
+                .flatMap((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) changeBeans -> RxRetrofit.getApi().deleteNeed(changeBeans))
+                .compose(applySchedulers())
+                .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
+                    @Override
+                    protected void onSuccess(ChangeCallBackBean changeCallBackBean) {
+                        super.onSuccess(changeCallBackBean);
+                        showToast(changeCallBackBean.getMsg());
+
+                        beanList.remove(position);
+                        beanHashMap.remove(position);
+                        childAdapter.notifyItemRemoved(position);
+                    }
+                });
+
     }
 
     public static DepartmentChildFragment getInstance(ListBean bean) {

@@ -91,4 +91,5 @@ dependencies {
 
     //卡片动画
     implementation 'com.loopeer.library:cardstack:1.0.2'
+
 }
