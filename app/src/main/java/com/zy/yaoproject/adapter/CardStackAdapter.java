@@ -10,6 +10,7 @@ import com.loopeer.cardstack.CardStackView;
 import com.loopeer.cardstack.StackAdapter;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.bean.LogisticsBean;
+import com.zy.yaoproject.utils.DateUtils;
 
 /**
  * Created by muzi on 2018/4/19.
@@ -66,8 +67,8 @@ public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBean.ListBe
         }
 
         public void onBind(LogisticsBean.DataBean.ListBean.NeeadBeanBean item, int position) {
-//            String time = DateUtils.stampToDate();
-            textTime.setText(null);
+            String time = DateUtils.stampToDate(item.getDate());
+            textTime.setText(time);
 
             switch (item.getPeisongFlag()) {
                 case "0":

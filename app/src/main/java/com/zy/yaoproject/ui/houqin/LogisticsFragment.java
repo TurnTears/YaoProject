@@ -12,6 +12,7 @@ import com.zy.yaoproject.adapter.LogisticsAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.LogisticsBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
+import com.zy.yaoproject.widget.CustomLoadMoreView;
 import com.zy.yaoproject.widget.IndicatorView;
 
 import java.util.List;
@@ -29,9 +30,10 @@ public class LogisticsFragment extends BaseFragment {
     RecyclerView recyclerView;
 
     private LogisticsAdapter adapter;
+    private LogisticsBean.DataBean dataBean;
+    private NsLinearLayoutManager layoutManager;
     private List<LogisticsBean.DataBean.ListBean> beanList;
 
-    private LogisticsBean.DataBean dataBean;
 
     private int currPosition = 0;
     private LogisticsChildFragment fragment;
@@ -42,13 +44,14 @@ public class LogisticsFragment extends BaseFragment {
         dataBean = getArguments().getParcelable("bean");
         beanList = dataBean.getList();
         fragments = new LogisticsChildFragment[beanList.size()];
-        return R.layout.fragment_logistics_child;
+        return R.layout.fragment_logistics;
     }
 
     @Override
     protected void initView(View view) {
         adapter = new LogisticsAdapter(R.layout.item_nav_class, beanList);
-        recyclerView.setLayoutManager(new NsLinearLayoutManager(getContext()));
+        layoutManager = new NsLinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -64,6 +67,12 @@ public class LogisticsFragment extends BaseFragment {
         //默认加载第一个fragment
         fragment = LogisticsChildFragment.getInstance(beanList.get(0));
         changeFragment(currPosition);
+
+        adapter.setLoadMoreView(new CustomLoadMoreView());
+        adapter.setOnLoadMoreListener(() -> {
+            View child = layoutManager.findViewByPosition(0);
+            indicatorView.openAnimator(child);
+        }, recyclerView);
     }
 
     /**

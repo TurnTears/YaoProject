@@ -14,6 +14,7 @@ import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.DataBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
+import com.zy.yaoproject.widget.CustomLoadMoreView;
 import com.zy.yaoproject.widget.IndicatorView;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class DepartmentFragment extends BaseFragment {
     private DataBean dataBean;
     private List<ListBean> beanList;
     private DepartmentAdapter adapter;
+    private NsLinearLayoutManager layoutManager;
 
     private int currPosition = 0;
     private DepartmentChildFragment fragment;
@@ -53,7 +55,8 @@ public class DepartmentFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         adapter = new DepartmentAdapter(R.layout.item_nav_class, beanList);
-        recyclerView.setLayoutManager(new NsLinearLayoutManager(getContext()));
+        layoutManager = new NsLinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -70,6 +73,12 @@ public class DepartmentFragment extends BaseFragment {
         //默认加载第一个fragment
         fragment = DepartmentChildFragment.getInstance(beanList.get(0));
         changeFragment(currPosition);
+
+        adapter.setLoadMoreView(new CustomLoadMoreView());
+        adapter.setOnLoadMoreListener(() -> {
+            View child = layoutManager.findViewByPosition(0);
+            indicatorView.openAnimator(child);
+        },recyclerView);
     }
 
     /**

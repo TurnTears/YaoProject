@@ -106,6 +106,15 @@ public class LogisticsBean extends BaseBean {
                 private String number;
                 private String peisongFlag;
                 private String unit;
+                private long date;
+
+                public long getDate() {
+                    return date;
+                }
+
+                public void setDate(long date) {
+                    this.date = date;
+                }
 
                 public String getId() {
                     return id;
@@ -147,6 +156,9 @@ public class LogisticsBean extends BaseBean {
                     this.unit = unit;
                 }
 
+                public NeeadBeanBean() {
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -159,9 +171,7 @@ public class LogisticsBean extends BaseBean {
                     dest.writeString(this.number);
                     dest.writeString(this.peisongFlag);
                     dest.writeString(this.unit);
-                }
-
-                public NeeadBeanBean() {
+                    dest.writeLong(this.date);
                 }
 
                 protected NeeadBeanBean(Parcel in) {
@@ -170,9 +180,10 @@ public class LogisticsBean extends BaseBean {
                     this.number = in.readString();
                     this.peisongFlag = in.readString();
                     this.unit = in.readString();
+                    this.date = in.readLong();
                 }
 
-                public static final Parcelable.Creator<NeeadBeanBean> CREATOR = new Parcelable.Creator<NeeadBeanBean>() {
+                public static final Creator<NeeadBeanBean> CREATOR = new Creator<NeeadBeanBean>() {
                     @Override
                     public NeeadBeanBean createFromParcel(Parcel source) {
                         return new NeeadBeanBean(source);
