@@ -1,175 +1,93 @@
 package com.zy.yaoproject.ui.houqin;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.loopeer.cardstack.CardStackView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.zy.yaoproject.R;
-import com.zy.yaoproject.adapter.CardStackAdapter;
+import com.zy.yaoproject.adapter.LogisticsAdapter;
 import com.zy.yaoproject.base.fragment.BaseFragment;
-import com.zy.yaoproject.bean.ChangeBean;
-import com.zy.yaoproject.bean.ChangeCallBackBean;
 import com.zy.yaoproject.bean.LogisticsBean;
-import com.zy.yaoproject.network.RxRetrofit;
-import com.zy.yaoproject.observer.EntityObserver;
+import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
+import com.zy.yaoproject.widget.IndicatorView;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.functions.Function;
-import io.reactivex.internal.util.AppendOnlyLinkedArrayList;
 
-
+/**
+ * 后勤
+ */
 public class LogisticsFragment extends BaseFragment {
 
-    @BindView(R.id.stackview)
-    CardStackView cardStackView;
-    @BindView(R.id.action_change)
-    FloatingActionButton actionChange;
-    @BindView(R.id.action_delete)
-    FloatingActionButton actionDelete;
-    @BindView(R.id.multiple_actions)
-    FloatingActionsMenu multipleActions;
+    @BindView(R.id.tabView)
+    IndicatorView indicatorView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-    private CardStackAdapter stackAdapter;
-    private LogisticsBean.DataBeanX bean;
-    private List<LogisticsBean.DataBeanX.DataBean> beanList;
+    private LogisticsAdapter adapter;
+    private List<LogisticsBean.DataBean.ListBean> beanList;
 
-    private AlertDialog.Builder deleteBuilder;
-    private AlertDialog.Builder changeBuilder;
+    private LogisticsBean.DataBean dataBean;
+
+    private int currPosition = 0;
+    private LogisticsChildFragment fragment;
+    private LogisticsChildFragment[] fragments;
 
     @Override
     protected int bindLayout() {
-        bean = getArguments().getParcelable("bean");
-        beanList = bean.getData();
-        return R.layout.fragment_logistics;
+        dataBean = getArguments().getParcelable("bean");
+        beanList = dataBean.getList();
+        fragments = new LogisticsChildFragment[beanList.size()];
+        return R.layout.activity_logistics;
     }
 
     @Override
     protected void initView(View view) {
-        stackAdapter = new CardStackAdapter(getContext(), new CardStackAdapter.OnClick() {
+        adapter = new LogisticsAdapter(R.layout.item_nav_class, beanList);
+        recyclerView.setLayoutManager(new NsLinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void onDelete(int position) {
-                deleteState(position);
-            }
-
-            @Override
-            public void onDelivery(int position) {
-                changeState(position);
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (currPosition != position) {
+                    //切换fragment
+                    changeFragment(position);
+                    currPosition = position;
+                }
+                indicatorView.openAnimator(view);
             }
         });
-        cardStackView.setAdapter(stackAdapter);
-        stackAdapter.updateData(beanList);
-        cardStackView.setItemExpendListener(expend -> {
-        });
+        //默认加载第一个fragment
+        fragment = LogisticsChildFragment.getInstance(beanList.get(0));
+        changeFragment(currPosition);
     }
 
     /**
-     * 更改配送状态
+     * 加载fragment
      *
      * @param position
      */
-    private void changeState(final int position) {
-        Observable.just(position)
-                .map(index -> beanList.get(position))
-                .map(dataBean -> new ChangeBean(dataBean.getId()))
-                .toList()
-                .flatMapObservable((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) list -> RxRetrofit.getApi()
-                        .changeState(list))
-                .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
-                    @Override
-                    protected void onSuccess(ChangeCallBackBean changeCallBackBean) {
-                        super.onSuccess(changeCallBackBean);
-                        showToast(changeCallBackBean.getMsg());
-
-                        //更改配送状态
-                        beanList.get(position).setDistributionFlag("1");
-                        stackAdapter.updateData(beanList);
-                    }
-                });
+    private void changeFragment(int position) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        if (fragments[currPosition] != null) {
+            transaction.hide(fragments[currPosition]);
+        }
+        fragment = fragments[position];
+        if (fragment == null) {
+            fragment = LogisticsChildFragment.getInstance(beanList.get(position));
+            fragments[position] = fragment;
+            transaction.add(R.id.fragmentContainer, fragment);
+        } else {
+            transaction.show(fragment);
+        }
+        transaction.commitAllowingStateLoss();
     }
 
-    /**
-     * 更改所有配送状态
-     */
-    private void changeState() {
-        Observable.fromIterable(beanList)
-                .filter((AppendOnlyLinkedArrayList.NonThrowingPredicate<LogisticsBean.DataBeanX.DataBean>) dataBean -> !dataBean.getDistributionFlag().equals("1"))
-                .map(dataBean -> new ChangeBean(dataBean.getId()))
-                .toList()
-                .flatMapObservable((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) list -> RxRetrofit.getApi()
-                        .changeState(list))
-                .compose(applySchedulers())
-                .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
-                    @Override
-                    protected void onSuccess(ChangeCallBackBean changeCallBackBean) {
-                        super.onSuccess(changeCallBackBean);
-                        showToast(changeCallBackBean.getMsg());
-
-                        //更改配送状态
-                        for (LogisticsBean.DataBeanX.DataBean dataBean : beanList) {
-                            if (!dataBean.getDistributionFlag().equals("1")) {
-                                dataBean.setDistributionFlag("1");
-                            }
-                        }
-                        stackAdapter.updateData(beanList);
-                    }
-                });
-    }
-
-    /**
-     * 删除配送状态
-     *
-     * @param position
-     */
-    private void deleteState(final int position) {
-        Observable.just(position)
-                .map(index -> beanList.get(position))
-                .map(dataBean -> new ChangeBean(dataBean.getId()))
-                .toList()
-                .flatMapObservable((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) list -> RxRetrofit.getApi()
-                        .deleteState(list))
-                .compose(applySchedulers())
-                .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
-                    @Override
-                    protected void onSuccess(ChangeCallBackBean changeCallBackBean) {
-                        super.onSuccess(changeCallBackBean);
-                        showToast(changeCallBackBean.getMsg());
-                        //删除配送
-                        beanList.remove(position);
-                        stackAdapter.updateData(beanList);
-                    }
-                });
-    }
-
-    /**
-     * 删除所有配送
-     */
-    private void deleteState() {
-        Observable.fromIterable(beanList)
-                .map(dataBean -> new ChangeBean(dataBean.getId()))
-                .toList()
-                .flatMapObservable((Function<List<ChangeBean>, Observable<ChangeCallBackBean>>) list -> RxRetrofit.getApi()
-                        .deleteState(list))
-                .compose(applySchedulers())
-                .subscribe(new EntityObserver<ChangeCallBackBean>(this) {
-                    @Override
-                    protected void onSuccess(ChangeCallBackBean changeCallBackBean) {
-                        super.onSuccess(changeCallBackBean);
-                        showToast(changeCallBackBean.getMsg());
-                        //删除配送
-                        beanList.clear();
-                        stackAdapter.updateData(beanList);
-                    }
-                });
-    }
-
-    public static LogisticsFragment getInstance(LogisticsBean.DataBeanX bean) {
+    public static LogisticsFragment getInstance(LogisticsBean.DataBean bean) {
         LogisticsFragment fragment = new LogisticsFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("bean", bean);
@@ -177,55 +95,4 @@ public class LogisticsFragment extends BaseFragment {
         return fragment;
     }
 
-
-    @OnClick({R.id.action_delete, R.id.action_change})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.action_delete:
-                showDeleteDialog();
-                break;
-            case R.id.action_change:
-                showChangeDialog();
-                break;
-        }
-        multipleActions.toggle();
-    }
-
-    /**
-     * 删除确认弹窗
-     */
-    private void showDeleteDialog() {
-        if (deleteBuilder == null) {
-            deleteBuilder = new AlertDialog.Builder(getContext());
-            deleteBuilder.setTitle("提示")
-                    .setMessage("确认全部删除吗？")
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        dialog.dismiss();
-                        deleteState();
-                    })
-                    .setNegativeButton("取消", (dialog, which) -> {
-                        dialog.dismiss();
-                    });
-        }
-        deleteBuilder.show();
-    }
-
-    /**
-     * 更改确认弹窗
-     */
-    private void showChangeDialog() {
-        if (changeBuilder == null) {
-            changeBuilder = new AlertDialog.Builder(getContext());
-            changeBuilder.setTitle("提示")
-                    .setMessage("确认全部配送吗？")
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        dialog.dismiss();
-                        changeState();
-                    })
-                    .setNegativeButton("取消", (dialog, which) -> {
-                        dialog.dismiss();
-                    });
-        }
-        changeBuilder.show();
-    }
 }

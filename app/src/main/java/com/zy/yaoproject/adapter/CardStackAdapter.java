@@ -10,13 +10,12 @@ import com.loopeer.cardstack.CardStackView;
 import com.loopeer.cardstack.StackAdapter;
 import com.zy.yaoproject.R;
 import com.zy.yaoproject.bean.LogisticsBean;
-import com.zy.yaoproject.utils.DateUtils;
 
 /**
  * Created by muzi on 2018/4/19.
  * 727784430@qq.com
  */
-public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBeanX.DataBean> {
+public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBean.ListBean.NeeadBeanBean> {
 
     private OnClick onClick;
 
@@ -30,7 +29,7 @@ public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBeanX.DataB
     }
 
     @Override
-    public void bindView(LogisticsBean.DataBeanX.DataBean data, int position, CardStackView.ViewHolder holder) {
+    public void bindView(LogisticsBean.DataBean.ListBean.NeeadBeanBean data, int position, CardStackView.ViewHolder holder) {
         MyViewHolder h = (MyViewHolder) holder;
         h.onBind(data, position);
     }
@@ -66,11 +65,11 @@ public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBeanX.DataB
             containerContent.setVisibility(b ? View.VISIBLE : View.GONE);
         }
 
-        public void onBind(LogisticsBean.DataBeanX.DataBean item, int position) {
-            String time = DateUtils.stampToDate(item.getCreateDate());
-            textTime.setText(time);
+        public void onBind(LogisticsBean.DataBean.ListBean.NeeadBeanBean item, int position) {
+//            String time = DateUtils.stampToDate();
+            textTime.setText(null);
 
-            switch (item.getDistributionFlag()) {
+            switch (item.getPeisongFlag()) {
                 case "0":
                     //更改配送状态
                     textState.setText("待配送");
@@ -92,9 +91,8 @@ public class CardStackAdapter extends StackAdapter<LogisticsBean.DataBeanX.DataB
                     btnDelivery.setBackgroundResource(R.drawable.btn_bg_complete);
                     break;
             }
-            LogisticsBean.DataBeanX.DataBean.TypeNameBean typeName = item.getTypeName();
-            textName.setText(typeName.getName());
-            textNum.setText(item.getFundNum() + "/" + typeName.getUnit());
+            textName.setText(item.getName());
+            textNum.setText(item.getNumber() + "/" + item.getUnit());
 
             btnDelivery.setOnClickListener(v -> {
                 if (onClick != null) {

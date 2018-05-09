@@ -12,91 +12,61 @@ import java.util.List;
 public class LogisticsBean extends BaseBean {
 
 
-    private List<DataBeanX> data;
+    private List<DataBean> data;
 
-    public List<DataBeanX> getData() {
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(List<DataBeanX> data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 
-    public static class DataBeanX implements Parcelable {
+    public static class DataBean implements Parcelable {
         /**
-         * data : [{"createDate":1523980800000,"distributionFlag":"0","fundNum":"1","id":"5bc88e0e4be8421ca2f16d178411eb66","typeName":{"name":"傻狗鹏","unit":"条"},"user":{"id":"1","name":"admin"}}]
-         * keshiName : 泌尿外科
-         * typeId : 15a0b8dad21d4152bbb9b033b1b31e92
+         * id : 1
+         * list : [{"id":"2","name":"耳鼻喉科","neeadBean":[{"id":"2fb9282932e345fdaa44a1677a7bf20d","name":"一次性口罩","number":"3","peisongFlag":"0","unit":"只"},{"id":"4ed31ee315574f5f8a6e29a723bcf7ba","name":"碘伏","number":"2","peisongFlag":"0","unit":"瓶"},{"id":"926860bc34284a89bc07d409174655ca","name":"纱布叠片","number":"3","peisongFlag":"0","unit":"片"}]},{"id":"3","name":"眼科","neeadBean":[{"id":"5bf16b39eb7b44d9bc6a629eaef9292c","name":"眼镜","number":"1","peisongFlag":"1","unit":"个"}]}]
+         * name : 门诊部
          */
 
-        private String keshiName;
-        private String typeId;
-        private List<DataBean> data;
+        private String id;
+        private String name;
+        private List<ListBean> list;
 
-        public String getKeshiName() {
-            return keshiName;
+        public String getId() {
+            return id;
         }
 
-        public void setKeshiName(String keshiName) {
-            this.keshiName = keshiName;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getTypeId() {
-            return typeId;
+        public String getName() {
+            return name;
         }
 
-        public void setTypeId(String typeId) {
-            this.typeId = typeId;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public List<DataBean> getData() {
-            return data;
+        public List<ListBean> getList() {
+            return list;
         }
 
-        public void setData(List<DataBean> data) {
-            this.data = data;
+        public void setList(List<ListBean> list) {
+            this.list = list;
         }
 
-        public static class DataBean implements Parcelable {
+        public static class ListBean implements Parcelable {
             /**
-             * createDate : 1523980800000
-             * distributionFlag : 0
-             * fundNum : 1
-             * id : 5bc88e0e4be8421ca2f16d178411eb66
-             * typeName : {"name":"傻狗鹏","unit":"条"}
-             * user : {"id":"1","name":"admin"}
+             * id : 2
+             * name : 耳鼻喉科
+             * neeadBean : [{"id":"2fb9282932e345fdaa44a1677a7bf20d","name":"一次性口罩","number":"3","peisongFlag":"0","unit":"只"},{"id":"4ed31ee315574f5f8a6e29a723bcf7ba","name":"碘伏","number":"2","peisongFlag":"0","unit":"瓶"},{"id":"926860bc34284a89bc07d409174655ca","name":"纱布叠片","number":"3","peisongFlag":"0","unit":"片"}]
              */
 
-            private long createDate;
-            private String distributionFlag;
-            private String fundNum;
             private String id;
-            private TypeNameBean typeName;
-            private UserBean user;
-
-            public long getCreateDate() {
-                return createDate;
-            }
-
-            public void setCreateDate(long createDate) {
-                this.createDate = createDate;
-            }
-
-            public String getDistributionFlag() {
-                return distributionFlag;
-            }
-
-            public void setDistributionFlag(String distributionFlag) {
-                this.distributionFlag = distributionFlag;
-            }
-
-            public String getFundNum() {
-                return fundNum;
-            }
-
-            public void setFundNum(String fundNum) {
-                this.fundNum = fundNum;
-            }
+            private String name;
+            private List<NeeadBeanBean> neeadBean;
 
             public String getId() {
                 return id;
@@ -106,87 +76,36 @@ public class LogisticsBean extends BaseBean {
                 this.id = id;
             }
 
-            public TypeNameBean getTypeName() {
-                return typeName;
+            public String getName() {
+                return name;
             }
 
-            public void setTypeName(TypeNameBean typeName) {
-                this.typeName = typeName;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public UserBean getUser() {
-                return user;
+            public List<NeeadBeanBean> getNeeadBean() {
+                return neeadBean;
             }
 
-            public void setUser(UserBean user) {
-                this.user = user;
+            public void setNeeadBean(List<NeeadBeanBean> neeadBean) {
+                this.neeadBean = neeadBean;
             }
 
-            public static class TypeNameBean implements Parcelable {
+            public static class NeeadBeanBean implements Parcelable {
                 /**
-                 * name : 傻狗鹏
-                 * unit : 条
-                 */
-
-                private String name;
-                private String unit;
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-
-                public String getUnit() {
-                    return unit;
-                }
-
-                public void setUnit(String unit) {
-                    this.unit = unit;
-                }
-
-                @Override
-                public int describeContents() {
-                    return 0;
-                }
-
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeString(this.name);
-                    dest.writeString(this.unit);
-                }
-
-                public TypeNameBean() {
-                }
-
-                protected TypeNameBean(Parcel in) {
-                    this.name = in.readString();
-                    this.unit = in.readString();
-                }
-
-                public static final Creator<TypeNameBean> CREATOR = new Creator<TypeNameBean>() {
-                    @Override
-                    public TypeNameBean createFromParcel(Parcel source) {
-                        return new TypeNameBean(source);
-                    }
-
-                    @Override
-                    public TypeNameBean[] newArray(int size) {
-                        return new TypeNameBean[size];
-                    }
-                };
-            }
-
-            public static class UserBean implements Parcelable {
-                /**
-                 * id : 1
-                 * name : admin
+                 * id : 2fb9282932e345fdaa44a1677a7bf20d
+                 * name : 一次性口罩
+                 * number : 3
+                 * peisongFlag : 0
+                 * unit : 只
                  */
 
                 private String id;
                 private String name;
+                private String number;
+                private String peisongFlag;
+                private String unit;
 
                 public String getId() {
                     return id;
@@ -204,6 +123,30 @@ public class LogisticsBean extends BaseBean {
                     this.name = name;
                 }
 
+                public String getNumber() {
+                    return number;
+                }
+
+                public void setNumber(String number) {
+                    this.number = number;
+                }
+
+                public String getPeisongFlag() {
+                    return peisongFlag;
+                }
+
+                public void setPeisongFlag(String peisongFlag) {
+                    this.peisongFlag = peisongFlag;
+                }
+
+                public String getUnit() {
+                    return unit;
+                }
+
+                public void setUnit(String unit) {
+                    this.unit = unit;
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -213,25 +156,31 @@ public class LogisticsBean extends BaseBean {
                 public void writeToParcel(Parcel dest, int flags) {
                     dest.writeString(this.id);
                     dest.writeString(this.name);
+                    dest.writeString(this.number);
+                    dest.writeString(this.peisongFlag);
+                    dest.writeString(this.unit);
                 }
 
-                public UserBean() {
+                public NeeadBeanBean() {
                 }
 
-                protected UserBean(Parcel in) {
+                protected NeeadBeanBean(Parcel in) {
                     this.id = in.readString();
                     this.name = in.readString();
+                    this.number = in.readString();
+                    this.peisongFlag = in.readString();
+                    this.unit = in.readString();
                 }
 
-                public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+                public static final Parcelable.Creator<NeeadBeanBean> CREATOR = new Parcelable.Creator<NeeadBeanBean>() {
                     @Override
-                    public UserBean createFromParcel(Parcel source) {
-                        return new UserBean(source);
+                    public NeeadBeanBean createFromParcel(Parcel source) {
+                        return new NeeadBeanBean(source);
                     }
 
                     @Override
-                    public UserBean[] newArray(int size) {
-                        return new UserBean[size];
+                    public NeeadBeanBean[] newArray(int size) {
+                        return new NeeadBeanBean[size];
                     }
                 };
             }
@@ -243,35 +192,29 @@ public class LogisticsBean extends BaseBean {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeLong(this.createDate);
-                dest.writeString(this.distributionFlag);
-                dest.writeString(this.fundNum);
                 dest.writeString(this.id);
-                dest.writeParcelable(this.typeName, flags);
-                dest.writeParcelable(this.user, flags);
+                dest.writeString(this.name);
+                dest.writeTypedList(this.neeadBean);
             }
 
-            public DataBean() {
+            public ListBean() {
             }
 
-            protected DataBean(Parcel in) {
-                this.createDate = in.readLong();
-                this.distributionFlag = in.readString();
-                this.fundNum = in.readString();
+            protected ListBean(Parcel in) {
                 this.id = in.readString();
-                this.typeName = in.readParcelable(TypeNameBean.class.getClassLoader());
-                this.user = in.readParcelable(UserBean.class.getClassLoader());
+                this.name = in.readString();
+                this.neeadBean = in.createTypedArrayList(NeeadBeanBean.CREATOR);
             }
 
-            public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
                 @Override
-                public DataBean createFromParcel(Parcel source) {
-                    return new DataBean(source);
+                public ListBean createFromParcel(Parcel source) {
+                    return new ListBean(source);
                 }
 
                 @Override
-                public DataBean[] newArray(int size) {
-                    return new DataBean[size];
+                public ListBean[] newArray(int size) {
+                    return new ListBean[size];
                 }
             };
         }
@@ -283,29 +226,29 @@ public class LogisticsBean extends BaseBean {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.keshiName);
-            dest.writeString(this.typeId);
-            dest.writeTypedList(this.data);
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+            dest.writeTypedList(this.list);
         }
 
-        public DataBeanX() {
+        public DataBean() {
         }
 
-        protected DataBeanX(Parcel in) {
-            this.keshiName = in.readString();
-            this.typeId = in.readString();
-            this.data = in.createTypedArrayList(DataBean.CREATOR);
+        protected DataBean(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+            this.list = in.createTypedArrayList(ListBean.CREATOR);
         }
 
-        public static final Parcelable.Creator<DataBeanX> CREATOR = new Parcelable.Creator<DataBeanX>() {
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
             @Override
-            public DataBeanX createFromParcel(Parcel source) {
-                return new DataBeanX(source);
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
             }
 
             @Override
-            public DataBeanX[] newArray(int size) {
-                return new DataBeanX[size];
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
             }
         };
     }

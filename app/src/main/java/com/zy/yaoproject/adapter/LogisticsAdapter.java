@@ -13,14 +13,14 @@ import java.util.List;
  * Created by muzi on 2018/4/19.
  * 727784430@qq.com
  */
-public class LogisticsAdapter extends BaseQuickAdapter<LogisticsBean.DataBeanX, BaseViewHolder> {
+public class LogisticsAdapter extends BaseQuickAdapter<LogisticsBean.DataBean.ListBean, BaseViewHolder> {
 
-    public LogisticsAdapter(int layoutResId, @Nullable List<LogisticsBean.DataBeanX> data) {
+    public LogisticsAdapter(int layoutResId, @Nullable List<LogisticsBean.DataBean.ListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, LogisticsBean.DataBeanX item) {
-        helper.setText(R.id.tabText, item.getKeshiName());
+    protected void convert(BaseViewHolder helper, LogisticsBean.DataBean.ListBean item) {
+        helper.setText(R.id.tabText, item.getName());
     }
 }
