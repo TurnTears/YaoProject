@@ -42,7 +42,7 @@ public class LogisticsFragment extends BaseFragment {
         dataBean = getArguments().getParcelable("bean");
         beanList = dataBean.getList();
         fragments = new LogisticsChildFragment[beanList.size()];
-        return R.layout.activity_logistics;
+        return R.layout.fragment_logistics_child;
     }
 
     @Override

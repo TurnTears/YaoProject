@@ -1,57 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.houqin.LogisticsChildFragment">
+    android:orientation="horizontal">
 
-    <com.loopeer.cardstack.CardStackView
-        android:id="@+id/stackview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp" />
+    <com.zy.yaoproject.widget.IndicatorView
+        android:id="@+id/tabView"
+        android:layout_width="4dp"
+        android:layout_height="15dp"
+        android:background="@color/themeColor"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/multiple_actions"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:paddingBottom="7.5dp"
+        android:paddingTop="7.5dp" />
+
+    <View
+        android:layout_width="@dimen/dividerHeight"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:fab_addButtonColorNormal="@color/white"
-        app:fab_addButtonColorPressed="@color/white_pressed"
-        app:fab_addButtonPlusIconColor="@color/half_black"
-        app:fab_addButtonSize="mini"
-        app:fab_labelStyle="@style/menu_labels_style">
+        android:background="@color/dividerColor" />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed"
-            app:fab_icon="@drawable/ic_done"
-            app:fab_size="mini"
-            app:fab_title="配送" />
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10" />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed"
-            app:fab_icon="@drawable/ic_delete"
-            app:fab_size="mini"
-            app:fab_title="删除" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-
-</RelativeLayout>
+</LinearLayout>

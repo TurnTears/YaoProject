@@ -47,7 +47,7 @@ public class LogisticsChildFragment extends BaseFragment {
     protected int bindLayout() {
         bean = getArguments().getParcelable("bean");
         beanList = bean.getNeeadBean();
-        return R.layout.fragment_logistics;
+        return R.layout.fragment_logistics_child;
     }
 
     @Override
