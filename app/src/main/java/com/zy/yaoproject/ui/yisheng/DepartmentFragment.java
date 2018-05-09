@@ -14,7 +14,6 @@ import com.zy.yaoproject.base.fragment.BaseFragment;
 import com.zy.yaoproject.bean.DataBean;
 import com.zy.yaoproject.bean.ListBean;
 import com.zy.yaoproject.layoutmanager.NsLinearLayoutManager;
-import com.zy.yaoproject.widget.CustomLoadMoreView;
 import com.zy.yaoproject.widget.IndicatorView;
 
 import java.util.List;
@@ -74,11 +73,13 @@ public class DepartmentFragment extends BaseFragment {
         fragment = DepartmentChildFragment.getInstance(beanList.get(0));
         changeFragment(currPosition);
 
-        adapter.setLoadMoreView(new CustomLoadMoreView());
-        adapter.setOnLoadMoreListener(() -> {
+        //设置indicatorView初始位置
+        adapter.setOnBinding(() -> {
             View child = layoutManager.findViewByPosition(0);
-            indicatorView.openAnimator(child);
-        },recyclerView);
+            if (child != null) {
+                indicatorView.openAnimator(child);
+            }
+        });
     }
 
     /**

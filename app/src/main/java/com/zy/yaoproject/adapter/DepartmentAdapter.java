@@ -19,5 +19,19 @@ public class DepartmentAdapter extends BaseQuickAdapter<ListBean, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, ListBean item) {
         helper.setText(R.id.tabText, item.getName());
+        if (onBinding!=null){
+            onBinding.onBinding();
+        }
     }
+
+    private OnBinding onBinding;
+
+    public void setOnBinding(OnBinding onBinding) {
+        this.onBinding = onBinding;
+    }
+
+    public interface  OnBinding{
+        void onBinding();
+    }
+
 }
